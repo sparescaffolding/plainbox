@@ -489,6 +489,7 @@ MonoBehaviour:
   jumpspeed: 5
   airmultiplier: 0.2
   drag: 4
+  crouchscale: 0.5
   orientation: {fileID: 1128632387}
   playerheight: 2
   groundmask:
