@@ -3,9 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Player_MovementState
+{
+    walk,
+    run,
+    air
+}
+
 public class Player_Controller : MonoBehaviour
 {
-    public float movespeed;
+    public Player_MovementState movement_state;
+    private float currentspeed;                         //the speed which gets applied
+    public float walkspeed;
+    public float runspeed;
     public float jumpspeed;
     public float airmultiplier;
     public float drag;
@@ -50,6 +60,7 @@ public class Player_Controller : MonoBehaviour
         
         PlayerInput();
         PlayerSpeedControl();
+        PlayerMovementStateHandle();
     }
 
     private void FixedUpdate() {
@@ -72,6 +83,26 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
+    public void PlayerMovementStateHandle()
+    {
+        //running speed
+        if (Input.GetKey(KeyCode.LeftShift) && grounded)
+        {
+            movement_state = Player_MovementState.run;
+            currentspeed = runspeed;
+        }
+        //normal walk speed
+        else if (grounded)
+        {
+            movement_state = Player_MovementState.walk;
+            currentspeed = walkspeed;
+        }
+        else
+        {
+            movement_state = Player_MovementState.air;
+        }
+    }
+    
     private void PlayerMove()
     {
         //calculate movement direction based on orientation direction
@@ -80,12 +111,12 @@ public class Player_Controller : MonoBehaviour
         //apply player movement force
         if (grounded)
         {
-            rigidbody.AddForce(movedirection.normalized * movespeed * 10, ForceMode.Force);
+            rigidbody.AddForce(movedirection.normalized * currentspeed * 10, ForceMode.Force);
         }
         //if in the air, apply the air multiplier
         else
         {
-            rigidbody.AddForce(movedirection.normalized * movespeed * 10 * airmultiplier, ForceMode.Force);
+            rigidbody.AddForce(movedirection.normalized * currentspeed * 10 * airmultiplier, ForceMode.Force);
         }
     }
 
@@ -93,10 +124,9 @@ public class Player_Controller : MonoBehaviour
     {
         //limit velocity when going faster than movespeed
         Vector3 flat_velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-        if (flat_velocity.magnitude > movespeed)
-        {
+        if (flat_velocity.magnitude > currentspeed) {
             //calculate limited speed
-            Vector3 limited_velocity = flat_velocity.normalized * movespeed;
+            Vector3 limited_velocity = flat_velocity.normalized * currentspeed;
             //apply
             rigidbody.velocity = new Vector3(limited_velocity.x, rigidbody.velocity.y, limited_velocity.z);
         }
