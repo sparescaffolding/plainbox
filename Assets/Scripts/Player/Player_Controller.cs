@@ -35,9 +35,9 @@ public class Player_Controller : MonoBehaviour
     public LayerMask groundmask;
     
     //bools
-    private bool grounded;
-    private bool canjump = true;
-    private bool exitingslope;
+    public bool grounded;
+    public bool canjump = true;
+    public bool exitingslope;
     
     
     //input stuff
@@ -91,7 +91,6 @@ public class Player_Controller : MonoBehaviour
         {
             //reset jump and start exiting slope
             canjump = false;
-            exitingslope = true;
             PlayerJump();
             //delay the next jump by a quarter of a second
             Invoke(nameof(PlayerJumpReset), 0.25f);
@@ -103,7 +102,7 @@ public class Player_Controller : MonoBehaviour
             //set the player Y scale to crouch scale
             transform.localScale = new Vector3(transform.localScale.x, crouchscale, transform.localScale.z);
             //push player down towards ground, so that way theres no space below player when initializing crouch
-            rigidbody.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            rigidbody.AddForce(Vector3.down * 10f, ForceMode.Impulse);
         }
         //end player crouching
         if (Input.GetKeyUp(KeyCode.LeftControl))
@@ -157,34 +156,33 @@ public class Player_Controller : MonoBehaviour
         }
         
         //if the player is on a slope angle (angle amount in accordance to max_slope in PlayerSlope()
-        if (PlayerSlope())
+        if (PlayerSlope() && !exitingslope && movedirection.magnitude > 0.1f && grounded)
         {
             rigidbody.AddForce(PlayerCalculateSlopeDirection() * currentspeed * 20f, ForceMode.Force);
-            //if player going upwards
-            if (rigidbody.velocity.y > 0)
-            {
-                //apply a downward force
-                rigidbody.AddForce(Vector3.down * 80f, ForceMode.Force);
-            }
         }
         
         //disable gravity if on a slope
-        rigidbody.useGravity = !PlayerSlope();
+        rigidbody.useGravity = !PlayerSlope() || exitingslope;
     }
 
     private void PlayerSpeedControl()
     {
         //control speed when on slope
-        if (PlayerSlope() && !exitingslope)
+        if (PlayerSlope() && !exitingslope && grounded)
         {
             if (rigidbody.velocity.magnitude > currentspeed)
             {
                 //mimic regular currentspeed when going up or down a slope
-                rigidbody.velocity = rigidbody.velocity.normalized * currentspeed;
+                Vector3 vel = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+                if (vel.magnitude > currentspeed)
+                {
+                    Vector3 vel2 = vel.normalized * currentspeed;
+                    rigidbody.velocity = new Vector3(vel2.x, rigidbody.velocity.y, vel2.z);
+                }
             }
         }
         //control the players speed on ground or air
-        else
+        else if (!exitingslope)
         {
             //limit velocity when going faster than movespeed
             Vector3 flat_velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
@@ -208,7 +206,6 @@ public class Player_Controller : MonoBehaviour
     private void PlayerJumpReset()
     {
         canjump = true;
-        exitingslope = false;
     }
 
     private bool PlayerSlope()
