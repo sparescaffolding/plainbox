@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c59997aa5d7eacd4e894c77ca493f707, type: 3}
+  m_Name: 1x1 Ramp
+  m_EditorClassIdentifier: 
+  name: 1x1 Ramp
+  icon: {fileID: 2800000, guid: 0a05de2a069eeaa4ea38b5c9c50478e4, type: 3}
+  prefab: {fileID: 7730153986831349924, guid: 2c20a0a72ef36904d9f1ed662d4fdcd6, type: 3}
