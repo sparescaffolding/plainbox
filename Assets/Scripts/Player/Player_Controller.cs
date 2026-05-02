@@ -27,7 +27,7 @@ public class Player_Controller : MonoBehaviour
     [Space]
     public float crouchscale;
     private float normalscale;
-    
+    public Collider player_collider;
     
     public Transform orientation;
     
@@ -101,7 +101,7 @@ public class Player_Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             //set the player Y scale to crouch scale
-            transform.localScale = new Vector3(transform.localScale.x, crouchscale, transform.localScale.z);
+            player_collider.transform.localScale = new Vector3(transform.localScale.x, crouchscale, transform.localScale.z);
             //push player down towards ground, so that way theres no space below player when initializing crouch
             rigidbody.AddForce(Vector3.down * 10f, ForceMode.Impulse);
         }
@@ -109,7 +109,7 @@ public class Player_Controller : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             //set the player Y scale back to original scale
-            transform.localScale = new Vector3(transform.localScale.x, normalscale, transform.localScale.z);
+            player_collider.transform.localScale = new Vector3(transform.localScale.x, normalscale, transform.localScale.z);
         }
     }
 

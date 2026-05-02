@@ -54,7 +54,7 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
         if (p != null)
         {
             //move towards position of point smoothly
-            Vector3 pos = Vector3.Lerp(transform.position, p.transform.position, Time.deltaTime * 10f);
+            Vector3 pos = Vector3.Lerp(transform.position, p.transform.position, Time.deltaTime * 50f);
             r.MovePosition(pos);
         }
     }
