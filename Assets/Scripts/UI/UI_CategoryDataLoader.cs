@@ -11,7 +11,7 @@ public class UI_CategoryDataLoader : MonoBehaviour
     {
         foreach (Object_SpawnEntityEntry entities in data.entities)
         {
-            //create entry in the list
+            //create and fill entry in the list
             GameObject entry = Instantiate(entry_prefab, transform);
             Object_MenuEntityEntry menu_entry = entry.GetComponent<Object_MenuEntityEntry>();
             menu_entry.data = entities;

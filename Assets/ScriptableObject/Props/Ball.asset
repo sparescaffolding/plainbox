@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Ball
   m_EditorClassIdentifier: 
   name: Ball
+  icon: {fileID: 2800000, guid: 262eaca93df775849b7d3272dedbaf85, type: 3}
   prefab: {fileID: 1493346955505488149, guid: 69d101369de7cdb459db47d20aa2c61a, type: 3}
