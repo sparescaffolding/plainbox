@@ -22,15 +22,15 @@ public class Player_Interactor : MonoBehaviour
         Physics.Raycast(transform.position, transform.forward, out hit, distance);
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (hit.transform.CompareTag("Pickup"))
+            //use Interact interface
+            if (hit.transform.TryGetComponent(out IInteractable interactable))
             {
-                //attempt to pickup if something can be picked up
-                pickup.AttemptPickup();
-                Debug.Log("attempted picking up " + hit.transform.name);
+                //start interacting
+                interactable.Interact(pickup);
             }
             else //if looking at nothing/uninteractable
             {
-                Debug.Log("nothing to interact on");
+                Debug.Log("nothing to interact");
             }
         }
     }

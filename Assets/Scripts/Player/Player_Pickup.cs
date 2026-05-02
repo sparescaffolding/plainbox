@@ -40,6 +40,24 @@ public class Player_Pickup : MonoBehaviour
             //if holding an object, add ability to rotate
             Rotate();
         }
+
+        if (Input.GetKeyDown(KeyCode.F) && holding)
+        {
+            //freeze object on F key
+            Freeze();
+        }
+    }
+
+    public void Freeze()
+    {
+        //toggle kinematic
+        current.r.isKinematic = !current.r.isKinematic;
+        //drop and clear
+        current.Drop(controller);
+        camera.can_look = true;
+        current = null;
+        p.value = default_distance;
+        holding = false;
     }
 
     public void Rotate()

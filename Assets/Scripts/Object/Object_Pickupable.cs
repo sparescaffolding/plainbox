@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object_Pickupable : MonoBehaviour
+public class Object_Pickupable : MonoBehaviour, IInteractable
 {
-    private Rigidbody r;
+    public Rigidbody r;
     private GameObject p;
     private Player_Camera cam;
     private void Awake()
@@ -57,5 +57,11 @@ public class Object_Pickupable : MonoBehaviour
             Vector3 pos = Vector3.Lerp(transform.position, p.transform.position, Time.deltaTime * 10f);
             r.MovePosition(pos);
         }
+    }
+    
+    public void Interact(Player_Pickup player)
+    {
+        player.AttemptPickup();
+        Debug.Log("picked up");
     }
 }

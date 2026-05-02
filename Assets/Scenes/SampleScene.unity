@@ -1481,7 +1481,7 @@ MonoBehaviour:
   playerheight: 2
   groundmask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   grounded: 0
   canjump: 1
   exitingslope: 0
