@@ -10,6 +10,9 @@ public class Player_Interactor : MonoBehaviour
     public bool interacting = false;
     void Update()
     {
+        //
+        //temporarily disabled this, rework later
+        //
         /*//start the raycast from the cameras forward direction
         Physics.Raycast(transform.position, transform.forward, out hit, distance);
         if (Input.GetKeyDown(KeyCode.E))

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Box
   m_EditorClassIdentifier: 
   name: Box
+  prefab: {fileID: 775360989095144953, guid: 51f3e68cc8ffc7843814c3688acf99aa, type: 3}

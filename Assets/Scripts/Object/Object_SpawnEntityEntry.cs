@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Spawn Entity Entry", menuName = "Plainbox/Spawn Entity Entry")]
 public class Object_SpawnEntityEntry : ScriptableObject
 {
-    public string name;
+    public string name;         //object name
+    public GameObject prefab;   //object prefab
 }

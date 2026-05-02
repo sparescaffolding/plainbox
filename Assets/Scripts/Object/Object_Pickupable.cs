@@ -28,7 +28,8 @@ public class Object_Pickupable : MonoBehaviour
 
     public void Throw()
     {
-        r.AddForce(p.transform.forward * 100f, ForceMode.Impulse);
+        //throw force
+        r.AddForce(p.transform.forward * 500f);
         Drop();
     }
 
