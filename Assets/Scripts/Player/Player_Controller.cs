@@ -22,6 +22,7 @@ public class Player_Controller : MonoBehaviour
     public float jumpspeed;
     public float airmultiplier;
     public float drag;
+    public bool can_move;
     //crouching
     [Space]
     public float crouchscale;
@@ -143,22 +144,25 @@ public class Player_Controller : MonoBehaviour
     {
         //calculate movement direction based on orientation direction
         movedirection = orientation.forward * vertical_input + orientation.right * horizontal_input;
+
+        if (can_move)
+        {
+            //apply player movement force
+            if (grounded)
+            {
+                rigidbody.AddForce(movedirection.normalized * currentspeed * 10, ForceMode.Force);
+            }
+            //if in the air, apply the air multiplier
+            else
+            {
+                rigidbody.AddForce(movedirection.normalized * currentspeed * 10 * airmultiplier, ForceMode.Force);
+            }
         
-        //apply player movement force
-        if (grounded)
-        {
-            rigidbody.AddForce(movedirection.normalized * currentspeed * 10, ForceMode.Force);
-        }
-        //if in the air, apply the air multiplier
-        else
-        {
-            rigidbody.AddForce(movedirection.normalized * currentspeed * 10 * airmultiplier, ForceMode.Force);
-        }
-        
-        //if the player is on a slope angle (angle amount in accordance to max_slope in PlayerSlope()
-        if (PlayerSlope() && !exitingslope && movedirection.magnitude > 0.1f && grounded)
-        {
-            rigidbody.AddForce(PlayerCalculateSlopeDirection() * currentspeed * 20f, ForceMode.Force);
+            //if the player is on a slope angle (angle amount in accordance to max_slope in PlayerSlope()
+            if (PlayerSlope() && !exitingslope && movedirection.magnitude > 0.1f && grounded)
+            {
+                rigidbody.AddForce(PlayerCalculateSlopeDirection() * currentspeed * 20f, ForceMode.Force);
+            }
         }
         
         //disable gravity if on a slope
@@ -197,10 +201,13 @@ public class Player_Controller : MonoBehaviour
 
     private void PlayerJump()
     {
-        //reset the players y velocity so jump results are always consistent
-        rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-        //apply jump force
-        rigidbody.AddForce(transform.up * jumpspeed, ForceMode.Impulse);
+        if (can_move)
+        {
+            //reset the players y velocity so jump results are always consistent
+            rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
+            //apply jump force
+            rigidbody.AddForce(transform.up * jumpspeed, ForceMode.Impulse);
+        }
     }
 
     private void PlayerJumpReset()

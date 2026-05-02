@@ -11,6 +11,7 @@ public class Player_Camera : MonoBehaviour
     public float sensitivity_y;
     private float rotation_x;
     private float rotation_y;
+    public bool can_look;
 
     public Transform orientation;
 
@@ -23,15 +24,18 @@ public class Player_Camera : MonoBehaviour
 
     private void Update()
     {
-        //get mouse input axis
-        float mouse_x = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivity_x;
-        float mouse_y = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity_y;
-        rotation_y += mouse_x;
-        rotation_x -= mouse_y;
-        //clamp vertical rotation to 90 degreees
-        rotation_x = Mathf.Clamp(rotation_x, -90, 90);
-        //apply rotations to the camera and orientation transform
-        transform.rotation = Quaternion.Euler(rotation_x, rotation_y, 0);
-        orientation.rotation = Quaternion.Euler(0, rotation_y, 0);
+        if (can_look)
+        {
+            //get mouse input axis
+            float mouse_x = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivity_x;
+            float mouse_y = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity_y;
+            rotation_y += mouse_x;
+            rotation_x -= mouse_y;
+            //clamp vertical rotation to 90 degreees
+            rotation_x = Mathf.Clamp(rotation_x, -90, 90);
+            //apply rotations to the camera and orientation transform
+            transform.rotation = Quaternion.Euler(rotation_x, rotation_y, 0);
+            orientation.rotation = Quaternion.Euler(0, rotation_y, 0);
+        }
     }
 }
