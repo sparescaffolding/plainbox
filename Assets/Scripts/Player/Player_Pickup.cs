@@ -8,6 +8,7 @@ using UnityEngine;
 public class Player_Pickup : MonoBehaviour
 {
     public GameObject hold_point;
+    public Collider controller;
     public LayerMask pickup_layer;
     public Player_Interactor interactor;
     private Object_Pickupable current;
@@ -19,9 +20,9 @@ public class Player_Pickup : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !holding)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (current == null)
+            if (current == null && !holding)
             {
                 //shoot a raycast with a distance according to the interactor
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactor.distance, pickup_layer))
@@ -30,7 +31,7 @@ public class Player_Pickup : MonoBehaviour
                     if (hit.transform.TryGetComponent(out current))
                     {
                         //start grabbing
-                        current.Grab(hold_point);
+                        current.Grab(hold_point, controller);
                         holding = true;
                     }
                 }
@@ -38,7 +39,7 @@ public class Player_Pickup : MonoBehaviour
             else
             {
                 //drop and clear
-                current.Drop();
+                current.Drop(controller);
                 current = null;
                 holding = false;
             }
@@ -47,7 +48,7 @@ public class Player_Pickup : MonoBehaviour
         if (Input.GetMouseButton(0) && holding)
         {
             //throw the object thats being held
-            current.Throw();
+            current.Throw(controller);
             current = null;
             holding = false;
         }

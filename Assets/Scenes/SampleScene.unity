@@ -668,6 +668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hold_point: {fileID: 1884157395}
+  controller: {fileID: 804285238}
   pickup_layer:
     serializedVersion: 2
     m_Bits: 64
@@ -863,7 +864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 468763333}
-  y_offset: 2
+  y_offset: 1
 --- !u!1 &786707332
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,25 +12,34 @@ public class Object_Pickupable : MonoBehaviour
         r = GetComponent<Rigidbody>();
     }
 
-    public void Grab(GameObject point)
+    public void Grab(GameObject point, Collider controller)
     {
         //set point and disable gravity
         this.p = point;
         r.useGravity = false;
+        //ignore player collider
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller);
     }
 
-    public void Drop()
+    public void Drop(Collider controller)
     {
         //discard point and reenable gravity
         this.p = null;
         r.useGravity = true;
+        //ignore player collider
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller);
     }
 
-    public void Throw()
+    public void Throw(Collider controller)
     {
         //throw force
         r.AddForce(p.transform.forward * 500f);
-        Drop();
+        //drop stuff
+        //discard point and reenable gravity
+        this.p = null;
+        r.useGravity = true;
+        //ignore player collider
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller);
     }
 
     private void FixedUpdate()
