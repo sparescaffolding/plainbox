@@ -7,9 +7,11 @@ public class Object_Pickupable : MonoBehaviour
 {
     private Rigidbody r;
     private GameObject p;
+    private Player_Camera cam;
     private void Awake()
     {
         r = GetComponent<Rigidbody>();
+        cam = FindFirstObjectByType<Player_Camera>();
     }
 
     public void Grab(GameObject point, Collider controller)
@@ -17,8 +19,9 @@ public class Object_Pickupable : MonoBehaviour
         //set point and disable gravity
         this.p = point;
         r.useGravity = false;
+        r.drag = 5;
         //ignore player collider
-        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller);
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller, true);
     }
 
     public void Drop(Collider controller)
@@ -26,8 +29,10 @@ public class Object_Pickupable : MonoBehaviour
         //discard point and reenable gravity
         this.p = null;
         r.useGravity = true;
+        r.drag = 0;
+        cam.can_look = true;
         //ignore player collider
-        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller);
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller, false);
     }
 
     public void Throw(Collider controller)
@@ -38,8 +43,10 @@ public class Object_Pickupable : MonoBehaviour
         //discard point and reenable gravity
         this.p = null;
         r.useGravity = true;
+        r.drag = 0;
+        cam.can_look = true;
         //ignore player collider
-        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller);
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller, false);
     }
 
     private void FixedUpdate()
