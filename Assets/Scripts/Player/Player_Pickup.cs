@@ -58,13 +58,13 @@ public class Player_Pickup : MonoBehaviour
 
     public void Freeze()
     {
-        //toggle kinematic
-        current.r.isKinematic = !current.r.isKinematic;
         //drop and clear
         current.Drop(controller);
         tools_manager.ShowTools();
         using_tool = false;
         camera.can_look = true;
+        //kinematic true
+        current.r.isKinematic = true;
         current = null;
         p.value = default_distance;
         holding = false;
@@ -104,6 +104,7 @@ public class Player_Pickup : MonoBehaviour
                     current.Grab(hold_point, controller);
                     tools_manager.is_using = true;
                     p.value = default_distance;
+                    current.r.isKinematic = true;
                     holding = true;
                 }
             }
@@ -116,6 +117,7 @@ public class Player_Pickup : MonoBehaviour
             tools_manager.is_using = false;
             tools_manager.ShowTools();
             using_tool = false;
+            current.r.isKinematic = false;
             current = null;
             p.value = default_distance;
             holding = false;
