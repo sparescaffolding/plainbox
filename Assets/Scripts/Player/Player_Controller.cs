@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -16,13 +17,14 @@ public class Player_Controller : MonoBehaviour
 {
     public Player_MovementState movement_state;
     //move and jump speeds/forces
-    private float currentspeed;                         //the speed which gets applied
+    [SerializeField] private float currentspeed;                         //the speed which gets applied
     public float walkspeed;
     public float runspeed;
     public float jumpspeed;
     public float airmultiplier;
     public float drag;
     public bool can_move;
+    public bool flying;
     //crouching
     [Space]
     public float crouchscale;
@@ -49,6 +51,15 @@ public class Player_Controller : MonoBehaviour
     private Rigidbody rigidbody;
 
     private RaycastHit hit_slope;
+    
+    private float air_multiplier_original;
+    private bool flown_before = false;
+    
+    private bool wait = false;
+    bool noclip = false;
+    
+    //double thing
+    private float last_time = 0;
 
     private void Start()
     {
@@ -57,6 +68,7 @@ public class Player_Controller : MonoBehaviour
         rigidbody.freezeRotation = true;
         //set the player height
         normalscale = transform.localScale.y;
+        air_multiplier_original = airmultiplier;
     }
 
     private void Update() {
@@ -76,6 +88,24 @@ public class Player_Controller : MonoBehaviour
         PlayerInput();
         PlayerSpeedControl();
         PlayerMovementStateHandle();
+
+        //disable gravity if flying
+        if (flying)
+        {
+            rigidbody.useGravity = false;
+            airmultiplier = 1;
+        }
+        else
+        {
+            rigidbody.useGravity = true;
+            airmultiplier = air_multiplier_original;
+        }
+        
+        if (!flying)
+        {
+            noclip = false;
+            player_collider.enabled = true;
+        }
     }
 
     private void FixedUpdate() {
@@ -88,7 +118,7 @@ public class Player_Controller : MonoBehaviour
         vertical_input = Input.GetAxisRaw("Vertical");
         
         //jump functionality
-        if (Input.GetKey(KeyCode.Space) && canjump && grounded)
+        if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying)
         {
             //reset jump and start exiting slope
             canjump = false;
@@ -98,7 +128,7 @@ public class Player_Controller : MonoBehaviour
         }
         
         //start player crouching if unpaused (player can still crouch if paused if this isnt setup)
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !Game_Pause.is_paused)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !Game_Pause.is_paused && !flying)
         {
             //set the player Y scale to crouch scale
             player_collider.transform.localScale = new Vector3(transform.localScale.x, crouchscale, transform.localScale.z);
@@ -106,17 +136,72 @@ public class Player_Controller : MonoBehaviour
             rigidbody.AddForce(Vector3.down * 10f, ForceMode.Impulse);
         }
         //end player crouching
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.LeftControl) && !flying)
         {
             //set the player Y scale back to original scale
             player_collider.transform.localScale = new Vector3(transform.localScale.x, normalscale, transform.localScale.z);
+        }
+        
+        //flying
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (wait && Time.time - last_time < 0.2f)
+            {
+                flying = true;
+                noclip = true;
+                player_collider.enabled = false;
+                wait = false;
+            }
+            else
+            {
+                //first press
+                wait = true;
+                last_time = Time.time;
+
+                StartCoroutine(SinglePressDelay());
+            }
+        }
+
+        //altitude adjustment while flying
+        if (flying)
+        {
+            //go up
+            if (Input.GetKey(KeyCode.Space))
+            {
+                rigidbody.AddForce(Vector3.up * 6f);
+            }
+            //go down
+            else if (Input.GetKey(KeyCode.LeftControl))
+            {
+                rigidbody.AddForce(Vector3.down * 6f);
+            }
+            else
+            {
+                //smoothly go back to 0
+                rigidbody.velocity = new Vector3(rigidbody.velocity.x, Mathf.Lerp(rigidbody.velocity.y, 0f, Time.deltaTime * 6f), rigidbody.velocity.z);
+            }
+        }
+    }
+
+    IEnumerator SinglePressDelay()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        if (wait)
+        {
+            //single press
+            flying = !flying;
+            noclip = false;
+            player_collider.enabled = true;
+
+            wait = false;
         }
     }
 
     public void PlayerMovementStateHandle()
     {
         //running speed
-        if (Input.GetKey(KeyCode.LeftShift) && grounded)
+        if (Input.GetKey(KeyCode.LeftShift) && grounded && !flying)
         {
             movement_state = Player_MovementState.run;
             currentspeed = runspeed;
@@ -133,7 +218,7 @@ public class Player_Controller : MonoBehaviour
         }
         
         //crouching
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl) && !flying && grounded)
         {
             movement_state = Player_MovementState.crouch;
             currentspeed = walkspeed / 2;
@@ -165,8 +250,11 @@ public class Player_Controller : MonoBehaviour
             }
         }
         
-        //disable gravity if on a slope
-        rigidbody.useGravity = !PlayerSlope() || exitingslope;
+        //disable gravity if on a slope and not flying
+        if (!flying)
+        {
+            rigidbody.useGravity = !PlayerSlope() || exitingslope;
+        }
     }
 
     private void PlayerSpeedControl()

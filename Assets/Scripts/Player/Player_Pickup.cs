@@ -11,9 +11,9 @@ public class Player_Pickup : MonoBehaviour
     public Collider controller;
     public LayerMask pickup_layer;
     public Player_Interactor interactor;
-    private Object_Pickupable current;
-    private Player_PickupDistance p;
-    private Player_Camera camera;
+    public Object_Pickupable current;
+    public Player_PickupDistance p;
+    public Player_Camera camera;
     public Tools_Manager tools_manager;
     [Range(1.5f, 4f)]
     public float default_distance = 2f;
@@ -80,8 +80,8 @@ public class Player_Pickup : MonoBehaviour
             float x_axis_rot = Input.GetAxis("Mouse X");
             float y_axis_rot = Input.GetAxis("Mouse Y");
             //rotate in accordance of axis
-            current.transform.Rotate(Vector3.down, x_axis_rot);
-            current.transform.Rotate(Vector3.right, y_axis_rot);
+            current.transform.Rotate(Vector3.down, y_axis_rot);
+            current.transform.Rotate(Vector3.right, x_axis_rot);
         }
         else
         {

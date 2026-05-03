@@ -1694,6 +1694,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   interactor: {fileID: 683950044}
+  current: {fileID: 0}
+  p: {fileID: 0}
+  camera: {fileID: 0}
   tools_manager: {fileID: 0}
   default_distance: 2
   using_tool: 0
@@ -1904,7 +1907,7 @@ GameObject:
   - component: {fileID: 743185151}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1957,12 +1960,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement_state: 0
+  currentspeed: 0
   walkspeed: 5
   runspeed: 7
-  jumpspeed: 5
+  jumpspeed: 9
   airmultiplier: 0.2
   drag: 8
   can_move: 1
+  flying: 0
   crouchscale: 0.5
   player_collider: {fileID: 804285238}
   orientation: {fileID: 1128632387}
@@ -2519,8 +2524,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000022888184, y: 0}
-  m_SizeDelta: {x: 922.45, y: 518.49}
+  m_AnchoredPosition: {x: -92.22065, y: 0}
+  m_SizeDelta: {x: 738.0089, y: 518.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &926462213
 MonoBehaviour:
@@ -4856,8 +4861,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000022888184, y: 0}
-  m_SizeDelta: {x: 922.45, y: 518.49}
+  m_AnchoredPosition: {x: -92.22065, y: 0}
+  m_SizeDelta: {x: 738.0089, y: 518.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1823294701
 MonoBehaviour:
@@ -5018,7 +5023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41cb5b74f3b4426409306ad4bbb6f3cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  camera: {fileID: 683950043}
   pause_screen: {fileID: 54081031}
   to_disable:
   - {fileID: 1950045902}
