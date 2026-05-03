@@ -18,14 +18,14 @@ public class Player_Interactor : MonoBehaviour
     public Player_Pickup pickup;
     //
     public bool interacting = false;
-    private bool initialized_items = false;
+    private bool reinitialize_items = true;
     
     void Update()
     {
-        if (!initialized_items && tools_manager.initialized_items)
+        if (reinitialize_items && tools_manager.initialized_items)
         {
             tools_physhandler = FindFirstObjectByType<Tools_PhysicsHandler>();
-            initialized_items = true;
+            reinitialize_items = false;
         }
         
         //this fixes not being able to drop when picking up an item and setting its distance to more than distance
