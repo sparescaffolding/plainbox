@@ -22,7 +22,7 @@ public class UI_Manager : MonoBehaviour
         //spawn menu
         //
         //if tab is held down, show spawn menu, if held up (released), hide
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !Game_Pause.is_paused)
         {
             ui_spawnmenu.SetActive(true); //enable spawn menu
             camera.can_look = false; //disable looking
@@ -32,7 +32,7 @@ public class UI_Manager : MonoBehaviour
             Debug.Log(ui_spawnmenu.name + " shown");
         }
 
-        if (Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyUp(KeyCode.Tab) && !Game_Pause.is_paused)
         {
             ui_spawnmenu.SetActive(false); //disable spawn menu
             camera.can_look = true; //reenable looking

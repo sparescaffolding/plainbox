@@ -14,6 +14,7 @@ public class Tools_Manager : MonoBehaviour
     public GameObject player;
     public float cooldown = 0.1f;   //time between switching
     private float last_scroll_time;
+    private bool hide;
     [Space]
     public bool is_using = false;
     
@@ -66,10 +67,37 @@ public class Tools_Manager : MonoBehaviour
         {
             tool.SetActive(false);
         }
-        //enable the tool that belongs to the id
-        tools[current_tool_id].SetActive(true);
+        //enable the tool that belongs to the id only if hide is false
+        if (!hide)
+        {
+            tools[current_tool_id].SetActive(true);
+        }
     }
 
+    //hide tools
+    public void HideTools()
+    {
+        hide = true;
+        //hide all tools by disabling
+        foreach (GameObject tool in tools)
+        {
+            tool.SetActive(false);
+        }
+    }
+    
+    //unhide tools and show current
+    public void ShowTools()
+    {
+        hide = false;
+        //disable all
+        foreach (GameObject tool in tools)
+        {
+            tool.SetActive(false);
+        }
+        //and only enable the last used tool
+        tools[current_tool_id].SetActive(true);
+    }
+    
     //scaling fix
     private void LateUpdate()
     {

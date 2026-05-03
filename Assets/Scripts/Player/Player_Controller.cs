@@ -97,8 +97,8 @@ public class Player_Controller : MonoBehaviour
             Invoke(nameof(PlayerJumpReset), 0.25f);
         }
         
-        //start player crouching
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        //start player crouching if unpaused (player can still crouch if paused if this isnt setup)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !Game_Pause.is_paused)
         {
             //set the player Y scale to crouch scale
             player_collider.transform.localScale = new Vector3(transform.localScale.x, crouchscale, transform.localScale.z);

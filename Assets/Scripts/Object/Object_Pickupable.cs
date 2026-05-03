@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object_Pickupable : MonoBehaviour/*, IInteractable*/
+public class Object_Pickupable : MonoBehaviour, IInteractable
 {
     public Rigidbody r;
     private GameObject p;
     private Player_Camera cam;
+    private Player_Pickup f;
     private void Awake()
     {
         r = GetComponent<Rigidbody>();
         cam = FindFirstObjectByType<Player_Camera>();
+        
     }
 
     public void Grab(GameObject point, Collider controller)
@@ -59,10 +61,11 @@ public class Object_Pickupable : MonoBehaviour/*, IInteractable*/
         }
     }
     
-    //picked up with tool instead for now, may or may not bring back
-    /*public void Interact(Player_Pickup player)
+    //if picked up with interactable key, disable freezing and rotation
+    public void Interact(Player_Pickup player)
     {
+        player.using_tool = false;
         player.AttemptPickup();
         Debug.Log("picked up");
-    }*/
+    }
 }

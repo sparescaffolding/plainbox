@@ -14,9 +14,10 @@ public class Player_Pickup : MonoBehaviour
     private Object_Pickupable current;
     private Player_PickupDistance p;
     private Player_Camera camera;
-    private Tools_Manager tools_manager;
+    public Tools_Manager tools_manager;
     [Range(1.5f, 4f)]
     public float default_distance = 2f;
+    public bool using_tool;
     public bool holding = false;
     private void Start()
     {
@@ -28,25 +29,30 @@ public class Player_Pickup : MonoBehaviour
 
     private void Update()
     {
+        if (current != null)
+        {
+            //if holding an object and using tool, add ability to rotate
+            if (using_tool)
+            {
+                Rotate();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && holding && using_tool)
+        {
+            //freeze object on F key
+            Freeze();
+        }
+        
         if (Input.GetMouseButton(0) && holding)
         {
             //throw the object thats being held
             current.Throw(controller);
             current = null;
+            using_tool = false;
+            tools_manager.ShowTools();
             p.value = default_distance;
             holding = false;
-        }
-
-        if (current != null)
-        {
-            //if holding an object, add ability to rotate
-            Rotate();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F) && holding)
-        {
-            //freeze object on F key
-            Freeze();
         }
     }
 
@@ -56,6 +62,8 @@ public class Player_Pickup : MonoBehaviour
         current.r.isKinematic = !current.r.isKinematic;
         //drop and clear
         current.Drop(controller);
+        tools_manager.ShowTools();
+        using_tool = false;
         camera.can_look = true;
         current = null;
         p.value = default_distance;
@@ -106,6 +114,8 @@ public class Player_Pickup : MonoBehaviour
             current.Drop(controller);
             camera.can_look = true;
             tools_manager.is_using = false;
+            tools_manager.ShowTools();
+            using_tool = false;
             current = null;
             p.value = default_distance;
             holding = false;

@@ -7,6 +7,7 @@ public class Player_Interactor : MonoBehaviour
 {
     public float distance = 2f;     //how far the object can be interacted from
     public Player_PickupDistance d;
+    public Tools_Manager tools_manager;
     public RaycastHit hit;
     //
     //stuff that need interaction
@@ -25,8 +26,14 @@ public class Player_Interactor : MonoBehaviour
             //use Interact interface
             if (hit.transform.TryGetComponent(out IInteractable interactable))
             {
+                //
+                //pickup stuff
+                //
                 //start interacting
+                pickup.using_tool = false;
+                tools_manager.HideTools();
                 interactable.Interact(pickup);
+                
             }
             else //if looking at nothing/uninteractable
             {
@@ -40,6 +47,7 @@ public class Player_Interactor : MonoBehaviour
             if (hit.transform.CompareTag("Pickup"))
             {
                 //start interacting
+                pickup.using_tool = true;
                 pickup.AttemptPickup();
                 Debug.Log("attempted picking up " + hit.transform.name);
             }

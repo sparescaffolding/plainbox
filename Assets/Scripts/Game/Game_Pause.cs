@@ -5,27 +5,55 @@ using UnityEngine;
 
 public class Game_Pause : MonoBehaviour
 {
+    public Player_Camera camera;
     public GameObject pause_screen;
-    public bool is_paused = false;
+    public List<GameObject> to_disable = new List<GameObject>();
+    public static bool is_paused = false;
+    private bool u;
+
+    private void Start()
+    {
+        camera = FindFirstObjectByType<Player_Camera>();
+    }
 
     private void Update()
     {
         //if esc key pressed, toggle pause
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !is_paused)
         {
-            is_paused = !is_paused;
-        }
-        if (!is_paused)
-        {
-            //disable pause screen and resume
-            pause_screen.SetActive(false);
-            Time.timeScale = 1;
-        }
-        else
-        {
+            is_paused = true;
+            foreach (GameObject g in to_disable)
+            {
+                //disable what has to be disabled
+                g.SetActive(false);
+            }
             //enable pause screen and pause time
             pause_screen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             Time.timeScale = 0;
+            Debug.Log("game paused");
         }
+        else if (Input.GetKeyDown(KeyCode.Escape) && is_paused)
+        {
+            is_paused = false;
+            pause_screen.SetActive(false);
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            camera.can_look = true;
+            Debug.Log("game unpaused");
+        }
+    }
+
+    public void Resume()
+    {
+        is_paused = false;
+        pause_screen.SetActive(false);
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        camera.can_look = true;
+        Debug.Log("game unpaused");
     }
 }
