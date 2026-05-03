@@ -48,6 +48,7 @@ public class Player_Pickup : MonoBehaviour
         {
             //throw the object thats being held
             current.Throw(controller);
+            tools_manager.is_using = false;
             current = null;
             using_tool = false;
             tools_manager.ShowTools();

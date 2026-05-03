@@ -8,6 +8,9 @@ public class Player_Interactor : MonoBehaviour
     public float distance = 2f;     //how far the object can be interacted from
     public Player_PickupDistance d;
     public Tools_Manager tools_manager;
+    [Space]
+    public Tools_PhysicsHandler tools_physhandler;
+    [Space]
     public RaycastHit hit;
     //
     //stuff that need interaction
@@ -15,8 +18,16 @@ public class Player_Interactor : MonoBehaviour
     public Player_Pickup pickup;
     //
     public bool interacting = false;
+    private bool initialized_items = false;
+    
     void Update()
     {
+        if (!initialized_items && tools_manager.initialized_items)
+        {
+            tools_physhandler = FindFirstObjectByType<Tools_PhysicsHandler>();
+            initialized_items = true;
+        }
+        
         //this fixes not being able to drop when picking up an item and setting its distance to more than distance
         distance = d.value;
         //start the raycast from the cameras forward direction
@@ -46,10 +57,13 @@ public class Player_Interactor : MonoBehaviour
             //use Interact interface
             if (hit.transform.CompareTag("Pickup"))
             {
-                //start interacting
-                pickup.using_tool = true;
-                pickup.AttemptPickup();
-                Debug.Log("attempted picking up " + hit.transform.name);
+                if (tools_physhandler.selected)
+                {
+                    //start interacting
+                    pickup.using_tool = true;
+                    pickup.AttemptPickup();
+                    Debug.Log("attempted picking up " + hit.transform.name);
+                }
             }
             else //if looking at nothing/uninteractable
             {

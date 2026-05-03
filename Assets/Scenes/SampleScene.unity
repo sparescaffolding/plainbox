@@ -4764,6 +4764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tools_list:
   - {fileID: 11400000, guid: 12a5c1307900e9a4089a7c1eb52b860e, type: 2}
+  - {fileID: 11400000, guid: 699ae5c682570bd47bf223e2ce0430b6, type: 2}
   tools: []
   current_tool_id: 0
   current_tool_count: 0

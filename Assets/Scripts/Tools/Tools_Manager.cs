@@ -17,6 +17,8 @@ public class Tools_Manager : MonoBehaviour
     private bool hide;
     [Space]
     public bool is_using = false;
+    public GameObject tool_held;
+    public bool initialized_items = false;
     
     void Start()
     {
@@ -25,6 +27,7 @@ public class Tools_Manager : MonoBehaviour
         {
             GameObject b = Instantiate(g.prefab, transform);
             tools.Add(b);
+            initialized_items = true;
         }
         current_tool_count = tools_list.Count;
     }
@@ -70,7 +73,8 @@ public class Tools_Manager : MonoBehaviour
         //enable the tool that belongs to the id only if hide is false
         if (!hide)
         {
-            tools[current_tool_id].SetActive(true);
+            tool_held = tools[current_tool_id];
+            tool_held.SetActive(true);
         }
     }
 

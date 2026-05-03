@@ -53,27 +53,6 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller, false);
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        if (f.current != null)
-        {
-            //if collide with player
-            if (other.gameObject.transform.CompareTag("Player"))
-            {
-                //drop and clear
-                f.current.Drop(f.controller);
-                f.camera.can_look = true;
-                f.tools_manager.is_using = false;
-                f.tools_manager.ShowTools();
-                f.using_tool = false;
-                f.current.r.isKinematic = false;
-                f.current = null;
-                f.p.value = f.default_distance;
-                f.holding = false;
-            }
-        }
-    }
-
     private void FixedUpdate()
     {
         if (p != null)
