@@ -28,9 +28,10 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
 
     public void Drop(Collider controller)
     {
+        r.useGravity = true;
+        r.isKinematic = false;
         //discard point and reenable gravity
         this.p = null;
-        r.useGravity = true;
         r.drag = 0;
         cam.can_look = true;
         //ignore player collider
@@ -40,11 +41,12 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
     public void Throw(Collider controller)
     {
         //throw force
+        r.useGravity = true;
+        r.isKinematic = false;
         r.AddForce(p.transform.forward * 500f);
         //drop stuff
         //discard point and reenable gravity
         this.p = null;
-        r.useGravity = true;
         r.drag = 0;
         cam.can_look = true;
         //ignore player collider
