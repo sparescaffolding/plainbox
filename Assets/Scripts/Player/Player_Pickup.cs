@@ -14,6 +14,7 @@ public class Player_Pickup : MonoBehaviour
     private Object_Pickupable current;
     private Player_PickupDistance p;
     private Player_Camera camera;
+    private Tools_Manager tools_manager;
     [Range(1.5f, 4f)]
     public float default_distance = 2f;
     public bool holding = false;
@@ -22,6 +23,7 @@ public class Player_Pickup : MonoBehaviour
         interactor = FindFirstObjectByType<Player_Interactor>();
         p = FindFirstObjectByType<Player_PickupDistance>();
         camera = FindFirstObjectByType<Player_Camera>();
+        tools_manager = FindObjectOfType<Tools_Manager>();
     }
 
     private void Update()
@@ -92,6 +94,7 @@ public class Player_Pickup : MonoBehaviour
                 {
                     //start grabbing
                     current.Grab(hold_point, controller);
+                    tools_manager.is_using = true;
                     p.value = default_distance;
                     holding = true;
                 }
@@ -102,6 +105,7 @@ public class Player_Pickup : MonoBehaviour
             //drop and clear
             current.Drop(controller);
             camera.can_look = true;
+            tools_manager.is_using = false;
             current = null;
             p.value = default_distance;
             holding = false;

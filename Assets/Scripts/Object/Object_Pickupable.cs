@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object_Pickupable : MonoBehaviour, IInteractable
+public class Object_Pickupable : MonoBehaviour/*, IInteractable*/
 {
     public Rigidbody r;
     private GameObject p;
@@ -59,9 +59,10 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
         }
     }
     
-    public void Interact(Player_Pickup player)
+    //picked up with tool instead for now, may or may not bring back
+    /*public void Interact(Player_Pickup player)
     {
         player.AttemptPickup();
         Debug.Log("picked up");
-    }
+    }*/
 }

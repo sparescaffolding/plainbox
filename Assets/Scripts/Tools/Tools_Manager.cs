@@ -14,6 +14,8 @@ public class Tools_Manager : MonoBehaviour
     public GameObject player;
     public float cooldown = 0.1f;   //time between switching
     private float last_scroll_time;
+    [Space]
+    public bool is_using = false;
     
     void Start()
     {
@@ -33,15 +35,18 @@ public class Tools_Manager : MonoBehaviour
         //apply cooldown
         if (Time.time - last_scroll_time > cooldown)
         {
-            if (scroll > 0f)
+            if (!is_using)
             {
-                current_tool_id++;
-                last_scroll_time = Time.time;
-            }
-            else if (scroll < 0f)
-            {
-                current_tool_id--;
-                last_scroll_time = Time.time;
+                if (scroll > 0f)
+                {
+                    current_tool_id++;
+                    last_scroll_time = Time.time;
+                }
+                else if (scroll < 0f)
+                {
+                    current_tool_id--;
+                    last_scroll_time = Time.time;
+                }
             }
         }
         

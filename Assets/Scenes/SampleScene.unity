@@ -4261,6 +4261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1627831711}
   - component: {fileID: 1627831712}
+  - component: {fileID: 1627831713}
   m_Layer: 7
   m_Name: Tools
   m_TagString: Untagged
@@ -4303,6 +4304,23 @@ MonoBehaviour:
   current_tool_count: 0
   player: {fileID: 743185147}
   cooldown: 0.2
+  is_using: 0
+--- !u!114 &1627831713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627831710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247f8d2add6dc614eb951f9607ba8da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 743185150}
+  intensity: 0.1
+  intensity_x: 0.25
+  speed: 4
 --- !u!1 &1740254704
 GameObject:
   m_ObjectHideFlags: 0

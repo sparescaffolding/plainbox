@@ -33,6 +33,21 @@ public class Player_Interactor : MonoBehaviour
                 Debug.Log("nothing to interact");
             }
         }
+        //this is for picking up with the main tool (right click)
+        if (Input.GetMouseButtonDown(1))
+        {
+            //use Interact interface
+            if (hit.transform.CompareTag("Pickup"))
+            {
+                //start interacting
+                pickup.AttemptPickup();
+                Debug.Log("attempted picking up " + hit.transform.name);
+            }
+            else //if looking at nothing/uninteractable
+            {
+                Debug.Log("nothing to interact");
+            }
+        }
     }
 
     private void OnDrawGizmos()
