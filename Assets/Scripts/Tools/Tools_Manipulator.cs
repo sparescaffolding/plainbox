@@ -12,6 +12,7 @@ public class Tools_Manipulator : MonoBehaviour
     public GameObject selected_object;
     private UI_Manager ui_manager;
     private Player_Camera cam;
+    public Object_Manipulatable object_properties;
 
     private void Start()
     {
@@ -30,9 +31,11 @@ public class Tools_Manipulator : MonoBehaviour
         {
             if (_hit)
             {
-                //for now, only on props
-                if (hit.transform.gameObject.CompareTag("Pickup"))
+                //if object is set so that it can be manipulated by the tool
+                if (hit.transform.TryGetComponent<Object_Manipulatable>(out Object_Manipulatable manipulatable))
                 {
+                    //set what to load available properties
+                    object_properties = manipulatable;
                     //set selected object on right click
                     selected_object = hit.transform.gameObject;
                     ui_manager.ManipulateMenuShow();
@@ -43,6 +46,8 @@ public class Tools_Manipulator : MonoBehaviour
                 }
                 else
                 {
+                    //discord set properties
+                    object_properties = null;
                     //clear
                     selected_object = null;
                     cam.can_look = true;
@@ -54,6 +59,8 @@ public class Tools_Manipulator : MonoBehaviour
             }
             else
             {
+                //discord set properties
+                object_properties = null;
                 selected_object = null;
                 cam.can_look = true;
                 interactor.tools_manager.is_using = false;

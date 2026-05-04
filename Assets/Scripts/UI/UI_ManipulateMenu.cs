@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class UI_ManipulateMenu : MonoBehaviour
 {
+    [Header("available properties")]
+    public GameObject position;
+    public GameObject rotation;
+    public GameObject scale;
+    public GameObject color;
+    [Space]
     [Header("name field")]
     public TMP_InputField object_name;
     [Space]
@@ -22,7 +28,7 @@ public class UI_ManipulateMenu : MonoBehaviour
     public TMP_InputField x_scale;
     public TMP_InputField y_scale;
     public TMP_InputField z_scale;
-    
+    [Space]
     public Tools_Manipulator manipulator;
     
     // Start is called before the first frame update
@@ -33,6 +39,38 @@ public class UI_ManipulateMenu : MonoBehaviour
 
     public void Load()
     {
+        //disable all first
+        this.position.SetActive(false);
+        this.rotation.SetActive(false);
+        this.scale.SetActive(false);
+        this.color.SetActive(false);
+        
+        
+        //if position modification is allowed
+        if (manipulator.object_properties.position)
+        {
+            //enable field
+            this.position.SetActive(true);
+        }
+        //if rotation modification is allowed
+        if (manipulator.object_properties.rotation)
+        {
+            //enable field
+            this.rotation.SetActive(true);
+        }
+        //if scale modification is allowed
+        if (manipulator.object_properties.scale)
+        {
+            //enable field
+            this.scale.SetActive(true);
+        }
+        //if color modification is allowed
+        if (manipulator.object_properties.color)
+        {
+            //enable field
+            color.SetActive(true);
+        }
+        
         //pos rot and scale
         Vector3 position = manipulator.selected_object.gameObject.transform.position;
         Vector3 rotation = manipulator.selected_object.gameObject.transform.eulerAngles;

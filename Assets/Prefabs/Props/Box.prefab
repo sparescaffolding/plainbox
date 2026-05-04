@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 775360989095144955}
   - component: {fileID: 775360989095144952}
   - component: {fileID: 775360989095144959}
+  - component: {fileID: 6248833418652861409}
   m_Layer: 6
   m_Name: Box
   m_TagString: Pickup
@@ -128,3 +129,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   r: {fileID: 0}
+--- !u!114 &6248833418652861409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775360989095144953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79663db5dc8cb424183a973c9d72fdf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: 1
+  rotation: 1
+  scale: 1
+  color: 1

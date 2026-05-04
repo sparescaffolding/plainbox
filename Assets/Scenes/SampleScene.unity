@@ -12041,6 +12041,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d6833762757964088869ab8b6c3229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: {fileID: 701966693}
+  rotation: {fileID: 1298916466}
+  scale: {fileID: 1647629595}
+  color: {fileID: 1967492207}
   object_name: {fileID: 1351797852}
   x_position: {fileID: 1114536877}
   y_position: {fileID: 1827603869}
