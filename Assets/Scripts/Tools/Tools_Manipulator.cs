@@ -36,6 +36,7 @@ public class Tools_Manipulator : MonoBehaviour
                     //set selected object on right click
                     selected_object = hit.transform.gameObject;
                     ui_manager.ManipulateMenuShow();
+                    interactor.tools_manager.is_using = true;
                     cam.can_look = false;
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
@@ -45,16 +46,20 @@ public class Tools_Manipulator : MonoBehaviour
                     //clear
                     selected_object = null;
                     cam.can_look = true;
+                    interactor.tools_manager.is_using = false;
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
+                    ui_manager.manipulating = false;
                 }
             }
             else
             {
                 selected_object = null;
                 cam.can_look = true;
+                interactor.tools_manager.is_using = false;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                ui_manager.manipulating = false;
             }
         }
     }

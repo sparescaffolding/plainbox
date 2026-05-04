@@ -10,6 +10,8 @@ public class UI_Manager : MonoBehaviour
     [Space] public Player_Controller player_controller;
     public Player_Camera camera;
     public Player_3DPointer cursor;
+    [Space]
+    public bool manipulating = false;
 
     private void Start()
     {
@@ -22,6 +24,19 @@ public class UI_Manager : MonoBehaviour
     {
         ui_manipulatemenu.gameObject.SetActive(true);
         ui_manipulatemenu.Load();
+        manipulating = true;
+    }
+    
+    public void ManipulateMenuClose()
+    {
+        ui_manipulatemenu.gameObject.SetActive(false);
+        manipulating = false;
+        ui_manipulatemenu.manipulator.selected_object = null;
+        camera.can_look = true;
+        //disable is_using if exit button used
+        ui_manipulatemenu.manipulator.interactor.tools_manager.is_using = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()

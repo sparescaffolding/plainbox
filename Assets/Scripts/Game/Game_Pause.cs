@@ -9,11 +9,13 @@ public class Game_Pause : MonoBehaviour
     public GameObject pause_screen;
     public List<GameObject> to_disable = new List<GameObject>();
     public static bool is_paused = false;
+    private UI_Manager ui_manager;
     private bool u;
 
     private void Start()
     {
         camera = FindFirstObjectByType<Player_Camera>();
+        ui_manager = FindFirstObjectByType<UI_Manager>();
     }
 
     private void Update()
@@ -39,9 +41,12 @@ public class Game_Pause : MonoBehaviour
             is_paused = false;
             pause_screen.SetActive(false);
             Time.timeScale = 1;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            camera.can_look = true;
+            if (!ui_manager.manipulating)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                camera.can_look = true;
+            }
             Debug.Log("game unpaused");
         }
     }
@@ -51,9 +56,12 @@ public class Game_Pause : MonoBehaviour
         is_paused = false;
         pause_screen.SetActive(false);
         Time.timeScale = 1;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        camera.can_look = true;
+        if (!ui_manager.manipulating)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            camera.can_look = true;
+        }
         Debug.Log("game unpaused");
     }
 }
