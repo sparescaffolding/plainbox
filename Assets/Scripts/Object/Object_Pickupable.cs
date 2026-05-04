@@ -9,11 +9,13 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
     private GameObject p;
     private Player_Camera cam;
     private Player_Pickup f;
+    private Game_UndoSystem u;
     private void Awake()
     {
         r = GetComponent<Rigidbody>();
         cam = FindFirstObjectByType<Player_Camera>();
-        
+        u = FindFirstObjectByType<Game_UndoSystem>();
+        u.objects.Add(this.gameObject);
     }
 
     public void Grab(GameObject point, Collider controller)
