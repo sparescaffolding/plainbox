@@ -94,10 +94,10 @@ public class Player_Pickup : MonoBehaviour
             //disable looking around in camera
             camera.can_look = false;
             //get rotations
-            float x_axis_rot = Input.GetAxis("Mouse X");
-            float y_axis_rot = Input.GetAxis("Mouse Y");
+            float x_axis_rot = Input.GetAxis("Mouse Y");
+            float y_axis_rot = Input.GetAxis("Mouse X");
             //rotate in accordance of axis
-            current.transform.Rotate(Vector3.down, y_axis_rot);
+            current.transform.Rotate(Vector3.up, y_axis_rot);
             current.transform.Rotate(Vector3.right, x_axis_rot);
         }
         else

@@ -19,6 +19,7 @@ public class Tools_Manager : MonoBehaviour
     public bool is_using = false;
     public GameObject tool_held;
     public bool initialized_items = false;
+    private int last_tool_id = -1;
     
     void Start()
     {
@@ -65,16 +66,31 @@ public class Tools_Manager : MonoBehaviour
             current_tool_id = current_tool_count - 1;
         }
         
-        //set the active tool to current tool id
-        foreach (GameObject tool in tools)
+        //only update when state is changed rather than preframe
+        if (current_tool_id != last_tool_id)
         {
-            tool.SetActive(false);
+            RefreshToolVisibility();
+            last_tool_id = current_tool_id;
         }
+        
         //enable the tool that belongs to the id only if hide is false
         if (!hide)
         {
             tool_held = tools[current_tool_id];
             tool_held.SetActive(true);
+        }
+    }
+    
+    private void RefreshToolVisibility()
+    {
+        for (int i = 0; i < tools.Count; i++)
+        {
+            bool active_tool = (i == current_tool_id && !hide);
+            tools[i].SetActive(active_tool);
+            if (active_tool) 
+            {
+                tool_held = tools[i];
+            }
         }
     }
 

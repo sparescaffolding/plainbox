@@ -6,6 +6,7 @@ using UnityEngine;
 public class UI_Manager : MonoBehaviour
 {
     public GameObject ui_spawnmenu;
+    public UI_ManipulateMenu ui_manipulatemenu;
     [Space] public Player_Controller player_controller;
     public Player_Camera camera;
     public Player_3DPointer cursor;
@@ -15,6 +16,12 @@ public class UI_Manager : MonoBehaviour
         player_controller = FindFirstObjectByType<Player_Controller>(); //player controller to toggle movement
         camera = FindFirstObjectByType<Player_Camera>(); //player camera to toggle looking around
         cursor = FindFirstObjectByType<Player_3DPointer>(); //player pointer to point where to spawn
+    }
+
+    public void ManipulateMenuShow()
+    {
+        ui_manipulatemenu.gameObject.SetActive(true);
+        ui_manipulatemenu.Load();
     }
 
     void Update()

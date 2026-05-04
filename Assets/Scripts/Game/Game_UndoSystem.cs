@@ -16,6 +16,7 @@ public class Game_UndoSystem : MonoBehaviour
             Destroy(objects[^1]);
             //remove latest entry
             objects.RemoveAt(objects.Count - 1);
+            Debug.Log("Undo! " + objects.Count);
         }
     }
 }

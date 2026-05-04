@@ -8,6 +8,7 @@ public class Tools_PhysicsHandler : MonoBehaviour
 {
     public float force = 800f;
     [Space]
+    public Camera camera;
     public bool selected = false;
     public bool is_being_used = false;
     private Player_Interactor player_interactor;
