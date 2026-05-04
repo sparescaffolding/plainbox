@@ -1674,6 +1674,7 @@ MonoBehaviour:
   distance: 2
   d: {fileID: 1884157397}
   tools_manager: {fileID: 1627831712}
+  tools_physhandler: {fileID: 0}
   pickup: {fileID: 683950045}
   interacting: 0
 --- !u!114 &683950045
@@ -1974,7 +1975,10 @@ MonoBehaviour:
   playerheight: 2
   groundmask:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 8
+  prop_mask:
+    serializedVersion: 2
+    m_Bits: 64
   grounded: 0
   canjump: 1
   exitingslope: 0
@@ -4771,6 +4775,8 @@ MonoBehaviour:
   player: {fileID: 743185147}
   cooldown: 0.2
   is_using: 0
+  tool_held: {fileID: 0}
+  initialized_items: 0
 --- !u!114 &1627831713
 MonoBehaviour:
   m_ObjectHideFlags: 0

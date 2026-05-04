@@ -36,6 +36,7 @@ public class Player_Controller : MonoBehaviour
     //check stuff (grounded? etc.)
     public float playerheight;
     public LayerMask groundmask;
+    public LayerMask prop_mask;
     
     //bools
     public bool grounded;
@@ -57,6 +58,8 @@ public class Player_Controller : MonoBehaviour
     
     private bool wait = false;
     bool noclip = false;
+
+    private bool grounded_prop;
     
     //double thing
     private float last_time = 0;
@@ -74,6 +77,8 @@ public class Player_Controller : MonoBehaviour
     private void Update() {
         //check if player is grounded
         grounded = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.2f, groundmask);
+        grounded_prop = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.2f, prop_mask);
+
         
         //drag handler
         if (grounded)
@@ -118,7 +123,7 @@ public class Player_Controller : MonoBehaviour
         vertical_input = Input.GetAxisRaw("Vertical");
         
         //jump functionality
-        if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying)
+        if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying && !grounded_prop)
         {
             //reset jump and start exiting slope
             canjump = false;
