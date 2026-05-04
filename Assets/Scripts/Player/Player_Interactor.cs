@@ -63,11 +63,14 @@ public class Player_Interactor : MonoBehaviour
                     pickup.using_tool = true;
                     pickup.AttemptPickup();
                     Debug.Log("attempted picking up " + hit.transform.name);
+                    //mark it as being used
+                    tools_physhandler.is_being_used = true;
                 }
             }
             else //if looking at nothing/uninteractable
             {
                 Debug.Log("nothing to interact");
+                tools_physhandler.is_being_used = false;
             }
         }
     }

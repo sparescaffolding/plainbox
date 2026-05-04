@@ -29,6 +29,11 @@ public class Player_Pickup : MonoBehaviour
 
     private void Update()
     {
+        if (!holding || current == null)
+        {
+            interactor.tools_physhandler.is_being_used = false; 
+        }
+        
         if (current != null)
         {
             //if holding an object and using tool, add ability to rotate
@@ -44,10 +49,21 @@ public class Player_Pickup : MonoBehaviour
             Freeze();
         }
         
-        if (Input.GetMouseButton(0) && holding)
+        if (Input.GetMouseButton(0) && holding && !interactor.tools_physhandler.is_being_used)
         {
             //throw the object thats being held
-            current.Throw(controller);
+            current.Throw(controller, 400);
+            tools_manager.is_using = false;
+            current = null;
+            using_tool = false;
+            tools_manager.ShowTools();
+            p.value = default_distance;
+            holding = false;
+        }
+        if (Input.GetMouseButton(0) && holding && interactor.tools_physhandler.is_being_used)
+        {
+            //throw the object thats being held with extra force from physhandler
+            current.Throw(controller, interactor.tools_physhandler.force);
             tools_manager.is_using = false;
             current = null;
             using_tool = false;

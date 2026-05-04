@@ -38,12 +38,12 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), controller, false);
     }
 
-    public void Throw(Collider controller)
+    public void Throw(Collider controller, float force)
     {
         //throw force
         r.useGravity = true;
         r.isKinematic = false;
-        r.AddForce(p.transform.forward * 500f);
+        r.AddForce(p.transform.forward * force);
         //drop stuff
         //discard point and reenable gravity
         this.p = null;

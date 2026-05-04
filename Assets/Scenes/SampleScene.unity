@@ -1975,10 +1975,10 @@ MonoBehaviour:
   playerheight: 2
   groundmask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   prop_mask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   grounded: 0
   canjump: 1
   exitingslope: 0
