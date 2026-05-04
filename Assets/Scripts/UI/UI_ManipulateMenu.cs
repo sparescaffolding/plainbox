@@ -10,6 +10,7 @@ public class UI_ManipulateMenu : MonoBehaviour
     public GameObject rotation;
     public GameObject scale;
     public GameObject color;
+    public GameObject mass;
     [Space]
     [Header("name field")]
     public TMP_InputField object_name;
@@ -29,6 +30,8 @@ public class UI_ManipulateMenu : MonoBehaviour
     public TMP_InputField y_scale;
     public TMP_InputField z_scale;
     [Space]
+    public TMP_InputField weight;
+    [Space]
     public Tools_Manipulator manipulator;
     
     // Start is called before the first frame update
@@ -43,7 +46,10 @@ public class UI_ManipulateMenu : MonoBehaviour
         this.position.SetActive(false);
         this.rotation.SetActive(false);
         this.scale.SetActive(false);
-        this.color.SetActive(false);
+        color.SetActive(false);
+        mass.SetActive(false);
+        
+        Rigidbody rb = manipulator.selected_object.gameObject.GetComponent<Rigidbody>();
         
         
         //if position modification is allowed
@@ -70,6 +76,12 @@ public class UI_ManipulateMenu : MonoBehaviour
             //enable field
             color.SetActive(true);
         }
+        //if mass modification is allowed
+        if (manipulator.object_properties.mass)
+        {
+            //enable field
+            mass.SetActive(true);
+        }
         
         //pos rot and scale
         Vector3 position = manipulator.selected_object.gameObject.transform.position;
@@ -90,6 +102,8 @@ public class UI_ManipulateMenu : MonoBehaviour
         x_scale.text = scale.x.ToString();
         y_scale.text = scale.y.ToString();
         z_scale.text = scale.z.ToString();
+        //weight field initializing
+        weight.text = rb.mass.ToString();
         
         
         //apply new name
@@ -118,5 +132,8 @@ public class UI_ManipulateMenu : MonoBehaviour
         y_scale.onEndEdit.AddListener(value => { Vector3 scale = manipulator.selected_object.transform.localScale; scale.y = float.Parse(value); manipulator.selected_object.transform.localScale = scale; });
         //z
         z_scale.onEndEdit.AddListener(value => { Vector3 scale = manipulator.selected_object.transform.localScale; scale.z = float.Parse(value); manipulator.selected_object.transform.localScale = scale; });
+        
+        //apply new weight
+        weight.onEndEdit.AddListener(value => {if(float.TryParse(value, out float val)) { rb.mass = val; }});
    }
 }

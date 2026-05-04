@@ -145,3 +145,4 @@ MonoBehaviour:
   rotation: 1
   scale: 1
   color: 1
+  mass: 1

@@ -8,4 +8,5 @@ public class Object_Manipulatable : MonoBehaviour
     public bool rotation;
     public bool scale;
     public bool color;
+    public bool mass;
 }
