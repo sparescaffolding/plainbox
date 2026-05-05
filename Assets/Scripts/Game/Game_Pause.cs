@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game_Pause : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class Game_Pause : MonoBehaviour
                 //disable what has to be disabled
                 g.SetActive(false);
             }
+
             //enable pause screen and pause time
             pause_screen.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
@@ -47,6 +49,7 @@ public class Game_Pause : MonoBehaviour
                 Cursor.visible = false;
                 camera.can_look = true;
             }
+
             Debug.Log("game unpaused");
         }
     }
@@ -62,6 +65,14 @@ public class Game_Pause : MonoBehaviour
             Cursor.visible = false;
             camera.can_look = true;
         }
+
         Debug.Log("game unpaused");
+    }
+
+    public void Restart()
+    {
+        //reload current scene
+        //this is temporary, as restart logic would be improved on later
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

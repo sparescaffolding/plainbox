@@ -22,9 +22,12 @@ public class UI_Manager : MonoBehaviour
 
     public void ManipulateMenuShow()
     {
-        ui_manipulatemenu.gameObject.SetActive(true);
-        ui_manipulatemenu.Load();
-        manipulating = true;
+        if (!player_controller.dead)
+        {
+            ui_manipulatemenu.gameObject.SetActive(true);
+            ui_manipulatemenu.Load();
+            manipulating = true;
+        }
     }
     
     public void ManipulateMenuClose()
@@ -46,12 +49,16 @@ public class UI_Manager : MonoBehaviour
         //if tab is held down, show spawn menu, if held up (released), hide
         if (Input.GetKeyDown(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)
         {
-            ui_spawnmenu.SetActive(true); //enable spawn menu
-            camera.can_look = false; //disable looking
-            Cursor.lockState = CursorLockMode.None; //unlock mouse
-            Cursor.visible = true; //make mouse visible
-            cursor.can_update = false; //disable 3d pointer
-            Debug.Log(ui_spawnmenu.name + " shown");
+            //make sure this menu cant be opened when dead
+            if (!player_controller.dead)
+            {
+                ui_spawnmenu.SetActive(true); //enable spawn menu
+                camera.can_look = false; //disable looking
+                Cursor.lockState = CursorLockMode.None; //unlock mouse
+                Cursor.visible = true; //make mouse visible
+                cursor.can_update = false; //disable 3d pointer
+                Debug.Log(ui_spawnmenu.name + " shown");
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)

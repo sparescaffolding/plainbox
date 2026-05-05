@@ -12,8 +12,9 @@ public class Player_Camera : MonoBehaviour
     private float rotation_x;
     private float rotation_y;
     public bool can_look;
-
+    [Space]
     public Transform orientation;
+    public GameObject tools;
 
     private void Start()
     {
@@ -37,5 +38,13 @@ public class Player_Camera : MonoBehaviour
             transform.rotation = Quaternion.Euler(rotation_x, rotation_y, 0);
             orientation.rotation = Quaternion.Euler(0, rotation_y, 0);
         }
+    }
+
+    public void Death()
+    {
+        //death stuff
+        tools.SetActive(false);
+        Animator anim =  gameObject.GetComponent<Animator>();
+        anim.enabled = true;
     }
 }

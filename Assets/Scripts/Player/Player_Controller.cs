@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using TMPro;
 
 public enum Player_MovementState
 {
@@ -15,6 +16,8 @@ public enum Player_MovementState
 
 public class Player_Controller : MonoBehaviour
 {
+    public int health;
+    [Space]
     public Player_MovementState movement_state;
     //move and jump speeds/forces
     [SerializeField] private float currentspeed;                         //the speed which gets applied
@@ -25,6 +28,7 @@ public class Player_Controller : MonoBehaviour
     public float drag;
     public bool can_move;
     public bool flying;
+    public Player_Camera camera;
     //crouching
     [Space]
     public float crouchscale;
@@ -43,6 +47,10 @@ public class Player_Controller : MonoBehaviour
     public bool canjump = true;
     public bool exitingslope;
     
+    [Space]
+    [Header("UI stuff")]
+    public TextMeshProUGUI healthtext;
+    public GameObject deathfade;
     
     //input stuff
     private float horizontal_input;
@@ -67,6 +75,8 @@ public class Player_Controller : MonoBehaviour
     //double thing
     private float last_time = 0;
 
+    public bool dead = false;
+
     private void Start()
     {
         pickup = FindFirstObjectByType<Player_Pickup>();
@@ -76,13 +86,15 @@ public class Player_Controller : MonoBehaviour
         //set the player height
         normalscale = transform.localScale.y;
         air_multiplier_original = airmultiplier;
+        
+        //initialize stats
+        health = 100;
     }
 
     private void Update() {
         //check if player is grounded
         grounded = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.2f, groundmask);
         grounded_prop = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.2f, prop_mask);
-
         
         //drag handler
         if (grounded)
@@ -115,6 +127,25 @@ public class Player_Controller : MonoBehaviour
             noclip = false;
             player_collider.enabled = true;
         }
+        
+        //ui update
+        healthtext.text = "Health: " + health;
+        
+        //health checks
+        if (health <= 0)
+        {
+            PlayerDie();
+        }
+    }
+
+    private void PlayerDie()
+    {
+        //stop the player
+        camera.Death();
+        deathfade.SetActive(true);
+        can_move = false;
+        camera.can_look = false;
+        dead = true;
     }
 
     private void FixedUpdate() {
@@ -328,5 +359,25 @@ public class Player_Controller : MonoBehaviour
     private Vector3 PlayerCalculateSlopeDirection()
     {
         return Vector3.ProjectOnPlane(movedirection, hit_slope.normal).normalized;
+    }
+
+    public void PlayerTakeDamage(int damage)
+    {
+        //deduct
+        health -= damage;
+        if (health <= 0)
+        {
+            health = 0;
+        }
+    }
+    
+    public void PlayerTakeHealth(int amount)
+    {
+        //if not dead
+        if (!dead)
+        {
+            //add
+            health += amount;
+        }
     }
 }

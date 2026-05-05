@@ -14,8 +14,8 @@ public class Player_3DPointer : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
-            //go to cursor point
-            if (can_update)
+            //go to cursor point if conditions are met
+            if (can_update && !Game_Pause.is_paused && )
             {
                 transform.position = hit.point;
             }
