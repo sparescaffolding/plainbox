@@ -21,7 +21,6 @@ public class Game_Pause : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(is_paused);
         //if esc key pressed, toggle pause
         if (Input.GetKeyDown(KeyCode.Escape) && !is_paused)
         {

@@ -123,4 +123,17 @@ public class Tools_Manager : MonoBehaviour
     {
         transform.localScale = Vector3.one;
     }
+    
+    //add tool
+    public void AddTool(Tools_Entry tool)
+    {
+        //add to list
+        tools_list.Add(tool);
+        GameObject tool_obj = Instantiate(tool.prefab, transform);
+        tools.Add(tool_obj);
+        //instantiate
+        //add to tool count
+        current_tool_count++;
+        RefreshToolVisibility();
+    }
 }

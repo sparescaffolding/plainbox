@@ -45,7 +45,6 @@ public class Player_Interactor : MonoBehaviour
                 pickup.using_tool = false;
                 tools_manager.HideTools();
                 interactable.Interact(pickup);
-                
             }
             else //if looking at nothing/uninteractable
             {
@@ -55,23 +54,30 @@ public class Player_Interactor : MonoBehaviour
         //this is for picking up with the main tool (right click)
         if (Input.GetMouseButtonDown(1))
         {
-            //use Interact interface
-            if (hit.transform.CompareTag("Pickup"))
+            //check if theres actually a transform
+            if (hit.transform != null)
             {
-                if (tools_physhandler.selected)
+                //use Interact interface
+                if (hit.transform.CompareTag("Pickup"))
                 {
-                    //start interacting
-                    pickup.using_tool = true;
-                    pickup.AttemptPickup();
-                    Debug.Log("attempted picking up " + hit.transform.name);
-                    //mark it as being used
-                    tools_physhandler.is_being_used = true;
+                    if (tools_physhandler.selected)
+                    {
+                        //start interacting
+                        pickup.using_tool = true;
+                        pickup.AttemptPickup();
+                        Debug.Log("attempted picking up " + hit.transform.name);
+                        //mark it as being used
+                        tools_physhandler.is_being_used = true;
+                    }
+                    else
+                    {
+                        Debug.Log("nothing is selected");
+                    }
                 }
             }
-            else //if looking at nothing/uninteractable
+            else//if looking at nothing/uninteractable
             {
                 Debug.Log("nothing to interact");
-                tools_physhandler.is_being_used = false;
             }
         }
     }

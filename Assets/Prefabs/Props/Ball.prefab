@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1493346955505488148}
   - component: {fileID: 1493346955505488143}
   - component: {fileID: 6955195303046464319}
+  - component: {fileID: 5109232331974764142}
   m_Layer: 6
   m_Name: Ball
   m_TagString: Pickup
@@ -146,3 +147,16 @@ MonoBehaviour:
   scale: 1
   color: 1
   mass: 1
+--- !u!114 &5109232331974764142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493346955505488149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f23ad3d0bbece94e80f80f560eb5ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entry: {fileID: 11400000, guid: 699ae5c682570bd47bf223e2ce0430b6, type: 2}
