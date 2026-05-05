@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e02bac6736875741842d74ecbf8c4b4, type: 3}
-  m_Name: Test Tool 2
+  m_Script: {fileID: 11500000, guid: 7a0b75f632014004d87bbca721179978, type: 3}
+  m_Name: Tools
   m_EditorClassIdentifier: 
-  name: Tool 2
-  prefab: {fileID: 4082636619600098476, guid: eaa576779c0088948b7dda2602cb870d, type: 3}
+  entities:
+  - {fileID: 11400000, guid: c9d39ad0315080e4cbaa93b61eaf3026, type: 2}

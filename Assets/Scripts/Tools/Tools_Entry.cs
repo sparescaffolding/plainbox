@@ -8,4 +8,5 @@ public class Tools_Entry : ScriptableObject
 {
     public string name = "Tool";
     public GameObject prefab;
+    public GameObject prefab_drop;
 }

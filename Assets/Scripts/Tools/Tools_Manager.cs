@@ -11,6 +11,7 @@ public class Tools_Manager : MonoBehaviour
     public int current_tool_id;     //current selected
     public int current_tool_count;       //total tool amount
     [Space]
+    public Transform droppoint;
     public GameObject player;
     public float cooldown = 0.1f;   //time between switching
     private float last_scroll_time;
@@ -79,6 +80,12 @@ public class Tools_Manager : MonoBehaviour
             tool_held = tools[current_tool_id];
             tool_held.SetActive(true);
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            //drop
+            RemoveTool();
+        }
     }
     
     private void RefreshToolVisibility()
@@ -127,6 +134,13 @@ public class Tools_Manager : MonoBehaviour
     //add tool
     public void AddTool(Tools_Entry tool)
     {
+        //check if it exists
+        if (tools_list.Contains(tool))
+        {
+            Debug.Log(tool.name + " is already in the tool list so it will not be added. returning");
+            return;
+        }
+        
         //add to list
         tools_list.Add(tool);
         GameObject tool_obj = Instantiate(tool.prefab, transform);
@@ -135,5 +149,31 @@ public class Tools_Manager : MonoBehaviour
         //add to tool count
         current_tool_count++;
         RefreshToolVisibility();
+    }
+    
+    //drop tool
+    public void RemoveTool()
+    {
+        Tools_Entry tool = tools_list[current_tool_id];
+        //make sure its not a undroppable item
+        if (tool.name == "Physics Handler"/*|| tool.name == "put name of undroppable here"*/)
+        {
+            return;
+        }
+        else
+        {
+            //get prefab and rigidbody
+            GameObject drop_obj = Instantiate(tool.prefab_drop, droppoint.position, Quaternion.identity);
+            Rigidbody r = drop_obj.GetComponent<Rigidbody>();
+            //remove from list and destroy
+            Destroy(tools[current_tool_id]);
+            tools.RemoveAt(current_tool_id);
+            tools_list.RemoveAt(current_tool_id);
+            //throw
+            r.AddForce(droppoint.forward * 300f);
+            //deduct from values
+            current_tool_count--;
+            current_tool_id--;
+        }
     }
 }
