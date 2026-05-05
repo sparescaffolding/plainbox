@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using ColorUtility = UnityEngine.ColorUtility;
 
 public class UI_Color_PickerControl : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class UI_Color_PickerControl : MonoBehaviour
 
     public Slider hue_slider;
 
+    public TMP_InputField  hex_input; 
+    
     private Texture2D hue_texture;
     private Texture2D saturation_texture;
 
@@ -73,9 +76,12 @@ public class UI_Color_PickerControl : MonoBehaviour
 
     private void UpdateColor()
     {
+		Color col = Color.HSVToRGB(current_hue, current_saturation, current_value);
         //initialize current selected color
         Color current = Color.HSVToRGB(current_hue, current_saturation, current_value);
         ui_manager.ui_manipulatemenu.manipulator.selected_object.GetComponent<MeshRenderer>().material.color = current;
+		//set hexcode field to current color hex
+		hex_input.text = ColorUtility.ToHtmlStringRGB(col);
     }
 
     public void UpdateSaturation()
@@ -100,5 +106,29 @@ public class UI_Color_PickerControl : MonoBehaviour
         current_value = V;      //value
         
         UpdateColor();
+    }
+
+    public void OnHexInput()
+    {
+        //return if not hexcode
+        if (hex_input.text.Length < 6)
+        {
+            return;
+        }
+
+        Color col;
+        
+        //convert to hex
+        if (ColorUtility.TryParseHtmlString("#" + hex_input.text, out col))
+        {
+            Color.RGBToHSV(col, out current_hue, out current_saturation, out current_value);
+        }
+		
+		//update slider
+		hue_slider.value = current_hue;
+		hex_input.text = "";
+		
+		//call updates
+		UpdateColor();
     }
 }

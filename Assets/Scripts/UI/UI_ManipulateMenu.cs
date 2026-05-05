@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_ManipulateMenu : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class UI_ManipulateMenu : MonoBehaviour
     public GameObject scale;
     public GameObject color;
     public GameObject mass;
+    public GameObject health_property;
+    public GameObject damage_property;
+    public GameObject toggle_trigger;
     [Space]
     [Header("name field")]
     public TMP_InputField object_name;
@@ -29,15 +33,22 @@ public class UI_ManipulateMenu : MonoBehaviour
     public TMP_InputField x_scale;
     public TMP_InputField y_scale;
     public TMP_InputField z_scale;
+    [Space] [Header("trigger stuff")]
+    public Toggle object_trigger_gravity;
+    public TMP_InputField damage;
+    public TMP_InputField health;
     [Space]
     public TMP_InputField weight;
     [Space]
     public Tools_Manipulator manipulator;
     
+    private Rigidbody rb;
+    
     // Start is called before the first frame update
     void OnEnable()
     {
         manipulator = FindFirstObjectByType<Tools_Manipulator>();
+        object_trigger_gravity.onValueChanged.AddListener(ToggleTriggerGravity);
     }
 
     public void Load()
@@ -49,7 +60,7 @@ public class UI_ManipulateMenu : MonoBehaviour
         color.SetActive(false);
         mass.SetActive(false);
         
-        Rigidbody rb = manipulator.selected_object.gameObject.GetComponent<Rigidbody>();
+        rb = manipulator.selected_object.gameObject.GetComponent<Rigidbody>();
         
         
         //if position modification is allowed
@@ -81,6 +92,24 @@ public class UI_ManipulateMenu : MonoBehaviour
         {
             //enable field
             mass.SetActive(true);
+        }
+        //if trigger modification is allowed
+        if (manipulator.object_properties.trigger)
+        {
+            //enable field
+            toggle_trigger.SetActive(true);
+        }
+        //if health modification is allowed
+        if (manipulator.object_properties.health)
+        {
+            //enable field
+            health_property.SetActive(true);
+        }
+        //if damage modification is allowed
+        if (manipulator.object_properties.damage)
+        {
+            //enable field
+            damage_property.SetActive(true);
         }
         
         //pos rot and scale
@@ -133,7 +162,41 @@ public class UI_ManipulateMenu : MonoBehaviour
         //z
         z_scale.onEndEdit.AddListener(value => { Vector3 scale = manipulator.selected_object.transform.localScale; scale.z = float.Parse(value); manipulator.selected_object.transform.localScale = scale; });
         
+        //trigger stuff
+        //trigger
+        //look at void ToggleTriggerGravity below 
+        //damage
+        damage.onEndEdit.AddListener((value) => {if(int.TryParse(value, out int result)) {manipulator.object_properties.damage_trigger.damage = result; }});
+        //health
+        health.onEndEdit.AddListener((value) => {if(int.TryParse(value, out int result)) {manipulator.object_properties.health_trigger.amount = result; }});
+        
         //apply new weight
         weight.onEndEdit.AddListener(value => {if(float.TryParse(value, out float val)) { rb.mass = val; }});
    }
+
+    void ToggleTriggerGravity(bool is_on)
+    {
+        if (is_on)
+        {
+            rb.useGravity = false;
+            Collider[] colliders =manipulator.selected_object. GetComponentsInChildren<Collider>();
+
+            //collider stuff
+            foreach (Collider col in colliders)
+            {
+                col.isTrigger = true;
+            }
+        }
+        else
+        {
+            rb.useGravity = true;
+            Collider[] colliders = manipulator.selected_object.GetComponentsInChildren<Collider>();
+
+            //collider stuff
+            foreach (Collider col in colliders)
+            {
+                col.isTrigger = false;
+            }
+        }
+    }
 }
