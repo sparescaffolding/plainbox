@@ -21,6 +21,7 @@ public class Game_Pause : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(is_paused);
         //if esc key pressed, toggle pause
         if (Input.GetKeyDown(KeyCode.Escape) && !is_paused)
         {
@@ -73,6 +74,6 @@ public class Game_Pause : MonoBehaviour
     {
         //reload current scene
         //this is temporary, as restart logic would be improved on later
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(0);
     }
 }

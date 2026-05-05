@@ -13,7 +13,7 @@ public class Object_HealthTrigger : MonoBehaviour
         if (other.tag == "Player")
         {
             //get controller
-            Player_Controller p = other.GetComponent<Player_Controller>();
+            Player_Controller p = other.GetComponentInParent<Player_Controller>();
             //add health
             p.PlayerTakeHealth(amount);
         }
