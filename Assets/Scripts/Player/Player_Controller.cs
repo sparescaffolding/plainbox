@@ -55,6 +55,9 @@ public class Player_Controller : MonoBehaviour
     
     private float air_multiplier_original;
     private bool flown_before = false;
+
+    //to check if holding anything
+    private Player_Pickup pickup;
     
     private bool wait = false;
     bool noclip = false;
@@ -66,6 +69,7 @@ public class Player_Controller : MonoBehaviour
 
     private void Start()
     {
+        pickup = FindFirstObjectByType<Player_Pickup>();
         rigidbody = GetComponent<Rigidbody>();
         //freeze all rotations
         rigidbody.freezeRotation = true;
@@ -123,7 +127,7 @@ public class Player_Controller : MonoBehaviour
         vertical_input = Input.GetAxisRaw("Vertical");
         
         //jump functionality
-        if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying && !grounded_prop)
+        if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying && (!grounded_prop || !pickup.holding))
         {
             //reset jump and start exiting slope
             canjump = false;
