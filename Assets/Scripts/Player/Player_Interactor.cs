@@ -7,6 +7,7 @@ public class Player_Interactor : MonoBehaviour
 {
     public float distance = 2f;     //how far the object can be interacted from
     public Player_PickupDistance d;
+    public Player_Controller controller;
     public Tools_Manager tools_manager;
     [Space]
     public Tools_PhysicsHandler tools_physhandler;
@@ -32,7 +33,7 @@ public class Player_Interactor : MonoBehaviour
         distance = d.value;
         //start the raycast from the cameras forward direction
         Physics.Raycast(transform.position, transform.forward, out hit, distance);
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !controller.dead)
         {
             //use Interact interface
             if (hit.transform.TryGetComponent(out IInteractable interactable))
@@ -52,7 +53,7 @@ public class Player_Interactor : MonoBehaviour
             }
         }
         //this is for picking up with the main tool (right click)
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !controller.dead)
         {
             //use Interact interface
             if (hit.transform.CompareTag("Pickup"))
