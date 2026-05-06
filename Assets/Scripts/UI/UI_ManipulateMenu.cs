@@ -39,6 +39,7 @@ public class UI_ManipulateMenu : MonoBehaviour
     public TMP_InputField health;
     [Space]
     public TMP_InputField weight;
+    public TMP_InputField hex;
     [Space]
     public Tools_Manipulator manipulator;
     
@@ -134,9 +135,11 @@ public class UI_ManipulateMenu : MonoBehaviour
         //weight field initializing
         weight.text = rb.mass.ToString();
         
-        
         //apply new name
         object_name.onEndEdit.AddListener((value) => { manipulator.selected_object.name = value; });
+        
+        //clear hex code input field on load
+        hex.text = "";
         
         //position field applying
         //x

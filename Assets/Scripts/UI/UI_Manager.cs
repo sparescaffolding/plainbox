@@ -98,5 +98,13 @@ public class UI_Manager : MonoBehaviour
             //disable hud
             ui_hud.SetActive(false);
         }
+        
+        //disable menus that disable camera movement via mouse if can look
+        if (camera.can_look)
+        {
+            //this is a temporary fix, its very broken because if you just right click especially in the spawn menu it just closes
+            ManipulateMenuClose();
+            SpawnMenuClose();
+        }
     }
 }
