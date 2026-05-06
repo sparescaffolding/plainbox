@@ -20,10 +20,18 @@ public class Object_ToolPickup : MonoBehaviour
         //check if player
         if (other.transform.tag == "Player")
         {
-            //call addtool
-            tools_manager.AddTool(entry);
-            //destroy the pickup object
-            Destroy(gameObject);
+            //if tool is not in tool manager
+            if (!tools_manager.tools_list.Contains(entry))
+            {
+                //call addtool
+                tools_manager.AddTool(entry);
+                //find undo system
+                Game_UndoSystem undo_system = FindAnyObjectByType<Game_UndoSystem>();
+                //remove me from undo system
+                undo_system.objects.Remove(gameObject);
+                //destroy the pickup object
+                Destroy(gameObject);
+            }
         }
     }
 }

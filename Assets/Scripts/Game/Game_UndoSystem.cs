@@ -8,7 +8,7 @@ public class Game_UndoSystem : MonoBehaviour
     public List<GameObject> objects = new List<GameObject>();
     public GameObject action_list_content;
     public GameObject action_entry;
-
+    
     private void Update()
     {
         //if z pressed
