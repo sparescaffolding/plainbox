@@ -10,12 +10,14 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
     private Player_Camera cam;
     private Player_Pickup f;
     private Game_UndoSystem u;
+    private Collider me;
     private void Awake()
     {
         r = GetComponent<Rigidbody>();
         cam = FindFirstObjectByType<Player_Camera>();
         u = FindFirstObjectByType<Game_UndoSystem>();
         u.objects.Add(this.gameObject);
+        me = GetComponent<Collider>();
     }
 
     public void Grab(GameObject point, Collider controller)
@@ -30,8 +32,11 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
 
     public void Drop(Collider controller)
     {
-        r.useGravity = true;
-        r.isKinematic = false;
+        if (!me.isTrigger)
+        {
+            r.useGravity = true;
+            r.isKinematic = false;
+        }
         //discard point and reenable gravity
         this.p = null;
         r.drag = 0;
@@ -43,8 +48,11 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
     public void Throw(Collider controller, float force)
     {
         //throw force
-        r.useGravity = true;
-        r.isKinematic = false;
+        if (!me.isTrigger)
+        {
+            r.useGravity = true;
+            r.isKinematic = false;
+        }
         r.AddForce(p.transform.forward * force);
         //drop stuff
         //discard point and reenable gravity
