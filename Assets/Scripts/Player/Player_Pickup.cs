@@ -85,6 +85,8 @@ public class Player_Pickup : MonoBehaviour
         current = null;
         p.value = default_distance;
         holding = false;
+        //disable using in tools manager
+        tools_manager.is_using = false;
     }
 
     public void Rotate()

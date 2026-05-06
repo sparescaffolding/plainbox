@@ -7,6 +7,7 @@ public class UI_Manager : MonoBehaviour
 {
     public GameObject ui_spawnmenu;
     public UI_ManipulateMenu ui_manipulatemenu;
+    public GameObject ui_hud;
     [Space] public Player_Controller player_controller;
     public Player_Camera camera;
     public Player_3DPointer cursor;
@@ -18,6 +19,8 @@ public class UI_Manager : MonoBehaviour
         player_controller = FindFirstObjectByType<Player_Controller>(); //player controller to toggle movement
         camera = FindFirstObjectByType<Player_Camera>(); //player camera to toggle looking around
         cursor = FindFirstObjectByType<Player_3DPointer>(); //player pointer to point where to spawn
+        //enable hud
+        ui_hud.SetActive(true);
     }
 
     public void ManipulateMenuShow()
@@ -92,6 +95,8 @@ public class UI_Manager : MonoBehaviour
             SpawnMenuClose();
             //manipulate menu
             ManipulateMenuClose();
+            //disable hud
+            ui_hud.SetActive(false);
         }
     }
 }
