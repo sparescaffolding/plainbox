@@ -42,26 +42,24 @@ public class UI_Manager : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    public void SpawnMenuShow()
     {
-        //spawn menu
-        //
-        //if tab is held down, show spawn menu, if held up (released), hide
-        if (Input.GetKeyDown(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)
+        //make sure this menu cant be opened when dead, paused or manipulating
+        if (!player_controller.dead && !Game_Pause.is_paused && !manipulating)
         {
-            //make sure this menu cant be opened when dead
-            if (!player_controller.dead)
-            {
-                ui_spawnmenu.SetActive(true); //enable spawn menu
-                camera.can_look = false; //disable looking
-                Cursor.lockState = CursorLockMode.None; //unlock mouse
-                Cursor.visible = true; //make mouse visible
-                cursor.can_update = false; //disable 3d pointer
-                Debug.Log(ui_spawnmenu.name + " shown");
-            }
+            ui_spawnmenu.SetActive(true); //enable spawn menu
+            camera.can_look = false; //disable looking
+            Cursor.lockState = CursorLockMode.None; //unlock mouse
+            Cursor.visible = true; //make mouse visible
+            cursor.can_update = false; //disable 3d pointer
+            Debug.Log(ui_spawnmenu.name + " shown");
         }
+    }
 
-        if (Input.GetKeyUp(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)
+    public void SpawnMenuClose()
+    {
+        //cannot open menu is paused or manipulating
+        if (!Game_Pause.is_paused && !manipulating)
         {
             ui_spawnmenu.SetActive(false); //disable spawn menu
             camera.can_look = true; //reenable looking
@@ -69,6 +67,31 @@ public class UI_Manager : MonoBehaviour
             Cursor.visible = false; //make mouse invisible
             cursor.can_update = true; //reenable 3d pointer
             Debug.Log(ui_spawnmenu.name + " hidden");
+        }
+    }
+
+    void Update()
+    {
+        //spawn menu
+        //
+        //if tab is held down, show spawn menu, if held up (released), hide
+        if (Input.GetKeyDown(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)
+        {
+            SpawnMenuShow();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)
+        {
+            SpawnMenuClose();
+        }
+        
+        //if player dead disable all UI
+        if (player_controller.dead)
+        {
+            //spawn menu
+            SpawnMenuClose();
+            //manipulate menu
+            ManipulateMenuClose();
         }
     }
 }
