@@ -157,6 +157,19 @@ public class Player_Controller : MonoBehaviour
         horizontal_input = Input.GetAxisRaw("Horizontal");
         vertical_input = Input.GetAxisRaw("Vertical");
         
+        //running while flying (fly faster basically)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && flying && !grounded)
+        {
+            //speed up player to fly faster
+            currentspeed = (runspeed * 3);
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift) && flying && !grounded)
+        {
+            //speed up player 
+            currentspeed = (walkspeed * 2);
+        }
+        
         //jump functionality
         if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying && (!grounded_prop || !pickup.holding))
         {
