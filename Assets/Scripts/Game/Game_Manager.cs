@@ -11,6 +11,7 @@ public class Game_Manager : MonoBehaviour
     public GameObject fade;
     public GameObject hud;
     public GameObject tools_parent;
+    public Transform spawn_position;
 
     private void Start()
     {
@@ -26,10 +27,11 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
-    void Respawn()
+    public void Respawn()
     {
         controller.health = 100;                                        //reset health
         controller.dead = false;                                        //disable dead bool
+        controller.gameObject.transform.localPosition = spawn_position.localPosition;   //respawn position
         controller.can_move = true;                                     //reenable movement
         camera.can_look = true;                                         //reenable camera look
         camera_anim.enabled = false;                                    //stop animator component
@@ -37,5 +39,7 @@ public class Game_Manager : MonoBehaviour
         fade.SetActive(false);                                          //disable fade
         hud.SetActive(true);                                            //reenable hud
         tools_parent.SetActive(true);                                   //reenable tools
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

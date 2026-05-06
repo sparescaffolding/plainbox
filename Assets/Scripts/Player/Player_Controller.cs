@@ -146,6 +146,8 @@ public class Player_Controller : MonoBehaviour
         can_move = false;
         camera.can_look = false;
         dead = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void FixedUpdate() {
