@@ -15337,6 +15337,7 @@ GameObject:
   - component: {fileID: 1891465016}
   - component: {fileID: 1891465017}
   - component: {fileID: 1891465018}
+  - component: {fileID: 1891465019}
   m_Layer: 0
   m_Name: -= GameManager =-
   m_TagString: Untagged
@@ -15390,6 +15391,23 @@ MonoBehaviour:
   objects: []
   action_list_content: {fileID: 1864233185}
   action_entry: {fileID: 2194133749605260241, guid: 80fa58eaff968594bbd1485586b7d99d, type: 3}
+--- !u!114 &1891465019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891465015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1d0fc025880bc4fb2b26bb4c95858e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 743185150}
+  camera_anim: {fileID: 683950046}
+  fade: {fileID: 1287210659}
+  hud: {fileID: 1918464266}
+  tools_parent: {fileID: 1627831710}
 --- !u!1 &1902287367
 GameObject:
   m_ObjectHideFlags: 0
