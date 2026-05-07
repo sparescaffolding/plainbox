@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Tools_Manipulator : MonoBehaviour
@@ -13,6 +14,8 @@ public class Tools_Manipulator : MonoBehaviour
     private UI_Manager ui_manager;
     private Player_Camera cam;
     public Object_Manipulatable object_properties;
+    [Space]
+    public TextMeshProUGUI head;
 
     private void Start()
     {
@@ -25,12 +28,25 @@ public class Tools_Manipulator : MonoBehaviour
 
     void Update()
     {
+        //if there is an object selected
+        if (selected_object != null)
+        {
+            string objectname = selected_object.name.Replace("(Clone)", "").Trim();
+            //update tite
+            head.text = "ENTITY MANIPULATOR\n" + "|" + objectname + "|";
+        }
+        else
+        {
+            head.text = "ENTITY MANIPULATOR\n|NO OBJECT SELECTED|";
+        }
+        
         //raycast
         bool _hit = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactor.distance);
         if (Input.GetMouseButtonDown(1))
         {
             if (_hit)
             {
+                interactor.tools_manager.is_using = true;
                 //if object is set so that it can be manipulated by the tool
                 if (hit.transform.TryGetComponent<Object_Manipulatable>(out Object_Manipulatable manipulatable))
                 {
@@ -39,7 +55,6 @@ public class Tools_Manipulator : MonoBehaviour
                     //set selected object on right click
                     selected_object = hit.transform.gameObject;
                     ui_manager.ManipulateMenuShow();
-                    interactor.tools_manager.is_using = true;
                     cam.can_look = false;
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
