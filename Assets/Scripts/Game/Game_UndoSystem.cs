@@ -21,6 +21,10 @@ public class Game_UndoSystem : MonoBehaviour
                 //if there is a joint in joints
                 if (joint != null && (joint.gameObject == objects[^1] || joint.connectedBody != null && joint.connectedBody.gameObject == objects[^1]))
                 {
+                    GameObject entry = Instantiate(action_entry, action_list_content.transform);
+                    UI_ActionEntry ui_action_entry = entry.GetComponent<UI_ActionEntry>();
+                    //add undo weld text
+                    ui_action_entry.text.text = "Welding Undoed";
                     //remove from list
                     joints.Remove(joint);
                     //destroy
