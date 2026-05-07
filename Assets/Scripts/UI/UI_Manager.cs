@@ -12,6 +12,7 @@ public class UI_Manager : MonoBehaviour
     [Space] public Player_Controller player_controller;
     public Player_Camera camera;
     public Player_3DPointer cursor;
+    public Game_UndoSystem undosystem;
     [Space]
     public bool manipulating = false;
 
@@ -20,6 +21,7 @@ public class UI_Manager : MonoBehaviour
         player_controller = FindFirstObjectByType<Player_Controller>(); //player controller to toggle movement
         camera = FindFirstObjectByType<Player_Camera>(); //player camera to toggle looking around
         cursor = FindFirstObjectByType<Player_3DPointer>(); //player pointer to point where to spawn
+        undosystem = FindFirstObjectByType<Game_UndoSystem>();//find undo system
         //enable hud
         ui_hud.SetActive(true);
     }

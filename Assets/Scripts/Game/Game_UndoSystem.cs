@@ -6,6 +6,7 @@ using UnityEngine;
 public class Game_UndoSystem : MonoBehaviour
 {
     public List<GameObject> objects = new List<GameObject>();
+    public List<FixedJoint> joints = new List<FixedJoint>();
     public GameObject action_list_content;
     public GameObject action_entry;
     
@@ -14,6 +15,19 @@ public class Game_UndoSystem : MonoBehaviour
         //if z pressed
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            //check joints list first
+            foreach (FixedJoint joint in joints)
+            {
+                //if there is a joint in joints
+                if (joint != null && (joint.gameObject == objects[^1] || joint.connectedBody != null && joint.connectedBody.gameObject == objects[^1]))
+                {
+                    //remove from list
+                    joints.Remove(joint);
+                    //destroy
+                    Destroy(joint);
+                }
+            }
+            
             //destroy
             Destroy(objects[^1]);
             //add action entry and load TMP text reference

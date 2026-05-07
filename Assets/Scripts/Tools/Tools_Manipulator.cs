@@ -2,7 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+
+public enum Constraint
+{
+    None,
+    Weld
+}
 
 public class Tools_Manipulator : MonoBehaviour
 {
@@ -16,6 +23,15 @@ public class Tools_Manipulator : MonoBehaviour
     public Object_Manipulatable object_properties;
     [Space]
     public TextMeshProUGUI head;
+    public TextMeshProUGUI constraint_name;
+    public TextMeshProUGUI constraint_desc;
+    [Space]
+    [Header("manipulate settings")]
+    public Constraint constraint_state;
+
+    [Space] [Header("welding")]
+    public GameObject w_first_object;
+    public GameObject w_other_object;
 
     private void Start()
     {
@@ -24,8 +40,9 @@ public class Tools_Manipulator : MonoBehaviour
         interactor = FindFirstObjectByType<Player_Interactor>();
         ui_manager = FindFirstObjectByType<UI_Manager>();
         cam =  FindFirstObjectByType<Player_Camera>();
+        constraint_state = Constraint.None;
     }
-
+    
     void Update()
     {
         //if there is an object selected
@@ -38,6 +55,18 @@ public class Tools_Manipulator : MonoBehaviour
         else
         {
             head.text = "ENTITY MANIPULATOR\n|NO OBJECT SELECTED|";
+        }
+        
+        //constraint screen thing
+        if (constraint_state == Constraint.None)
+        {
+            constraint_name.text = "Constraint: " + "N/A";
+            constraint_desc.text = "None:\nNo constraints are selected!";
+        }
+        else if (constraint_state == Constraint.Weld)
+        {
+            constraint_name.text = "Constraint: " + "Weld";
+            constraint_desc.text = "Select first object you want to weld.";
         }
         
         //raycast
@@ -83,6 +112,58 @@ public class Tools_Manipulator : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 ui_manager.manipulating = false;
+            }
+        }
+        
+        //constraint functions
+        Weld();
+    }
+
+    public void Weld()
+    {
+        bool selected_first_obj = false;
+    
+        if (constraint_state == Constraint.Weld)
+        {
+            //shoot
+            RaycastHit hit;
+            bool _hit = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactor.distance);
+
+            if (Input.GetMouseButtonDown(0) && _hit)
+            {
+                GameObject clicked = hit.collider.gameObject;
+
+                //if first click set first object
+                if (w_first_object == null)
+                {
+                    w_first_object = clicked;
+                    return;
+                }
+                //else if this is the second click, weld
+                else
+                {
+                    w_other_object = clicked;
+
+                    //set rigidbodies
+                    Rigidbody A = w_first_object.GetComponent<Rigidbody>();
+                    Rigidbody B = w_other_object.GetComponent<Rigidbody>();
+
+                    if (A != null && B != null)
+                    {
+                        //add fixed joint component
+                        FixedJoint joint = w_first_object.AddComponent<FixedJoint>();
+                        joint.connectedBody = B;
+                        joint.breakForce = Mathf.Infinity;
+                        joint.breakTorque = Mathf.Infinity;
+                        joint.enableCollision = false;
+                        //finish by adding to undosystem
+                        ui_manager.undosystem.joints.Add(joint);    
+                    }
+                
+                    //reset
+                    w_first_object = null;
+                    w_other_object = null;
+                }
             }
         }
     }
