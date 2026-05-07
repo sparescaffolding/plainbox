@@ -129,9 +129,13 @@ public class UI_Manager : MonoBehaviour
         //manipulate settings menu
         //
         //if C is held down, show manipulate settings menu, if held up (released), hide
-        if (Input.GetKeyDown(KeyCode.C) && !Game_Pause.is_paused && !manipulating && ui_manipulatemenu.manipulator != null)
+        if (Input.GetKeyDown(KeyCode.C) && !Game_Pause.is_paused && !manipulating)
         {
-            ManipulateSettingsShow();
+            Tools_Manipulator manipulator = FindObjectOfType<Tools_Manipulator>();
+            if (manipulator != null)
+            {
+                ManipulateSettingsShow();
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.C) && !Game_Pause.is_paused && !manipulating)
