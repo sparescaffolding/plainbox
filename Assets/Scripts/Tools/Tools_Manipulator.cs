@@ -66,7 +66,7 @@ public class Tools_Manipulator : MonoBehaviour
         else if (constraint_state == Constraint.Weld)
         {
             constraint_name.text = "Constraint: " + "Weld";
-            constraint_desc.text = "Select first object you want to weld.";
+            constraint_desc.text = "Select first object you want to weld, Then select another object which you want to weld the first one to.";
         }
         
         //raycast
@@ -161,6 +161,7 @@ public class Tools_Manipulator : MonoBehaviour
                     }
                 
                     //reset
+                    constraint_desc.text = "Select first object you want to weld.";
                     w_first_object = null;
                     w_other_object = null;
                 }

@@ -15027,15 +15027,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'To attach an object to another one:
-
-    
-
-    - First select the object
-    you want to weld
-
-    - Then select another object which you want to weld the
-    first one'
+  m_text: None:\nNo constraints are selected!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a289e490be0256468732d7b61efe0b6, type: 2}
   m_sharedMaterial: {fileID: 327503293757606565, guid: 8a289e490be0256468732d7b61efe0b6, type: 2}
