@@ -18,7 +18,9 @@ public class UI_Color_PickerControl : MonoBehaviour
 
     public Slider hue_slider;
 
-    public TMP_InputField  hex_input; 
+    public TMP_InputField  hex_input;
+    public TMP_InputField mat_id_input;
+    public TextMeshProUGUI mat_count;
     
     private Texture2D hue_texture;
     private Texture2D saturation_texture;
@@ -30,8 +32,25 @@ public class UI_Color_PickerControl : MonoBehaviour
         //initialize
         ui_manager = FindFirstObjectByType<UI_Manager>();
         
+        
+        
         CreateHueImage();
         CreateSaturationImage();
+    }
+
+    private void Update()
+    {
+        //check if object is selected to not break
+        if (ui_manager.ui_manipulatemenu.manipulator.selected_object != null)
+        {
+            mat_count.text = (ui_manager.ui_manipulatemenu.manipulator.selected_object.GetComponent<MeshRenderer>().materials.Length - 1).ToString();
+            //only allow numbers
+            mat_id_input.text = System.Text.RegularExpressions.Regex.Replace(mat_id_input.text, "[^0-9]", "");
+            if (mat_id_input.text.Length == 0)
+            {
+                mat_id_input.text = "0";
+            }
+        }
     }
 
     private void CreateHueImage()
@@ -76,10 +95,12 @@ public class UI_Color_PickerControl : MonoBehaviour
 
     private void UpdateColor()
     {
+        int id = int.Parse(mat_id_input.text);
+        Material[] mats = ui_manager.ui_manipulatemenu.manipulator.selected_object.GetComponent<MeshRenderer>().materials;
 		Color col = Color.HSVToRGB(current_hue, current_saturation, current_value);
         //initialize current selected color
         Color current = Color.HSVToRGB(current_hue, current_saturation, current_value);
-        ui_manager.ui_manipulatemenu.manipulator.selected_object.GetComponent<MeshRenderer>().material.color = current;
+        mats[id].color = current;
 		//set hexcode field to current color hex
 		hex_input.text = ColorUtility.ToHtmlStringRGB(col);
     }
