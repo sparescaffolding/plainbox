@@ -34,7 +34,7 @@ public class UI_Manager : MonoBehaviour
         }
     }
     
-    public void ManipulateMenuClose()
+    public void ManipulateMenuClose(bool cursor_lock)
     {
         ui_manipulatemenu.gameObject.SetActive(false);
         manipulating = false;
@@ -42,8 +42,11 @@ public class UI_Manager : MonoBehaviour
         camera.can_look = true;
         //disable is_using if exit button used
         ui_manipulatemenu.manipulator.interactor.tools_manager.is_using = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (cursor_lock)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void SpawnMenuShow()
@@ -60,15 +63,18 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
-    public void SpawnMenuClose()
+    public void SpawnMenuClose(bool cursor_lock)
     {
         //cannot open menu is paused or manipulating
         if (!Game_Pause.is_paused && !manipulating)
         {
             ui_spawnmenu.SetActive(false); //disable spawn menu
             camera.can_look = true; //reenable looking
-            Cursor.lockState = CursorLockMode.Locked; //lock mouse
-            Cursor.visible = false; //make mouse invisible
+            if (cursor_lock)
+            {
+                Cursor.lockState = CursorLockMode.Locked; //lock mouse
+                Cursor.visible = false; //make mouse invisible
+            }
             cursor.can_update = true; //reenable 3d pointer
             Debug.Log(ui_spawnmenu.name + " hidden");
         }
@@ -83,17 +89,28 @@ public class UI_Manager : MonoBehaviour
         cursor.can_update = false; //disable 3d pointer
     }
 
-    public void ManipulateSettingsClose()
+    public void ManipulateSettingsClose(bool cursor_lock)
     {
         ui_manipulatesettings.SetActive(false);
         camera.can_look = true; //reenable looking
-        Cursor.lockState = CursorLockMode.Locked; //lock mouse
-        Cursor.visible = false; //make mouse invisible
+        if (cursor_lock)
+        {
+            Cursor.lockState = CursorLockMode.Locked; //lock mouse
+            Cursor.visible = false; //make mouse invisible
+        }
         cursor.can_update = true; //reenable 3d pointer
     }
 
     void Update()
     {
+        //if paused close all menu
+        if (Game_Pause.is_paused)
+        {
+            ManipulateSettingsClose(false);
+            SpawnMenuClose(false);
+            ManipulateMenuClose(false);
+        }
+        
         //spawn menu
         //
         //if tab is held down, show spawn menu, if held up (released), hide
@@ -104,7 +121,7 @@ public class UI_Manager : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)
         {
-            SpawnMenuClose();
+            SpawnMenuClose(true);
         }
         
         //manipulate settings menu
@@ -117,16 +134,16 @@ public class UI_Manager : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.C) && !Game_Pause.is_paused && !manipulating)
         {
-            ManipulateSettingsClose();
+            ManipulateSettingsClose(true);
         }
         
         //if player dead disable all UI
         if (player_controller.dead)
         {
             //spawn menu
-            SpawnMenuClose();
+            SpawnMenuClose(true);
             //manipulate menu
-            ManipulateMenuClose();
+            ManipulateMenuClose(true);
             //disable hud
             ui_hud.SetActive(false);
         }
@@ -135,8 +152,8 @@ public class UI_Manager : MonoBehaviour
         if (camera.can_look)
         {
             //this is a temporary fix, its very broken because if you just right click especially in the spawn menu it just closes
-            ManipulateMenuClose();
-            SpawnMenuClose();
+            ManipulateMenuClose(true);
+            SpawnMenuClose(true);
         }
     }
 }
