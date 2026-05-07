@@ -30,11 +30,13 @@ public class Tools_PhysicsHandler : MonoBehaviour
         {
             //start moving claw things (start animation)
             animator.SetBool("holding", true);
+            player_interactor.pickup.using_tool = true;
         }
         else
         {
             //exit animation if not holding
             animator.SetBool("holding", false);
+            player_interactor.pickup.using_tool = true;
         }
     }
 

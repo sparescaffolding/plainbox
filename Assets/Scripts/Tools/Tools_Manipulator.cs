@@ -70,6 +70,7 @@ public class Tools_Manipulator : MonoBehaviour
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                     ui_manager.manipulating = false;
+                    _hit = false;
                 }
             }
             else

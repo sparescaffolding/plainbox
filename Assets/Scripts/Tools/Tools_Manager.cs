@@ -21,9 +21,11 @@ public class Tools_Manager : MonoBehaviour
     public GameObject tool_held;
     public bool initialized_items = false;
     private int last_tool_id = -1;
+    private Player_Interactor interactor;
     
     void Start()
     {
+        interactor =  FindFirstObjectByType<Player_Interactor>();
         //instantiate each entry from tools list as child
         foreach (Tools_Entry g in tools_list)
         {
@@ -41,7 +43,7 @@ public class Tools_Manager : MonoBehaviour
         //apply cooldown
         if (Time.time - last_scroll_time > cooldown)
         {
-            if (!is_using)
+            if (!is_using && !interactor.pickup.holding)
             {
                 if (scroll > 0f)
                 {
