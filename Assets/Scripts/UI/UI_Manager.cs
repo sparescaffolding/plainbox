@@ -6,6 +6,7 @@ using UnityEngine;
 public class UI_Manager : MonoBehaviour
 {
     public GameObject ui_spawnmenu;
+    public GameObject ui_manipulatesettings;
     public UI_ManipulateMenu ui_manipulatemenu;
     public GameObject ui_hud;
     [Space] public Player_Controller player_controller;
@@ -73,6 +74,24 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public void ManipulateSettingsShow()
+    {
+        ui_manipulatesettings.SetActive(true);
+        camera.can_look = false; //disable looking
+        Cursor.lockState = CursorLockMode.None; //unlock mouse
+        Cursor.visible = true; //make mouse visible
+        cursor.can_update = false; //disable 3d pointer
+    }
+
+    public void ManipulateSettingsClose()
+    {
+        ui_manipulatesettings.SetActive(false);
+        camera.can_look = true; //reenable looking
+        Cursor.lockState = CursorLockMode.Locked; //lock mouse
+        Cursor.visible = false; //make mouse invisible
+        cursor.can_update = true; //reenable 3d pointer
+    }
+
     void Update()
     {
         //spawn menu
@@ -86,6 +105,19 @@ public class UI_Manager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Tab) && !Game_Pause.is_paused && !manipulating)
         {
             SpawnMenuClose();
+        }
+        
+        //manipulate settings menu
+        //
+        //if C is held down, show manipulate settings menu, if held up (released), hide
+        if (Input.GetKeyDown(KeyCode.C) && !Game_Pause.is_paused && !manipulating)
+        {
+            ManipulateSettingsShow();
+        }
+
+        if (Input.GetKeyUp(KeyCode.C) && !Game_Pause.is_paused && !manipulating)
+        {
+            ManipulateSettingsClose();
         }
         
         //if player dead disable all UI
