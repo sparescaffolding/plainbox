@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 4082636619600098480}
   - component: {fileID: 4082636619600098479}
   - component: {fileID: 3249132500137892525}
+  - component: {fileID: 5681953109497271803}
   m_Layer: 7
   m_Name: Entity Manipulator
   m_TagString: Untagged
@@ -325,6 +326,19 @@ MonoBehaviour:
   constraint_state: 0
   w_first_object: {fileID: 0}
   w_other_object: {fileID: 0}
+--- !u!114 &5681953109497271803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4082636619600098476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98cbdf8aeaefbdf439d0dd26e395b276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entry: {fileID: 11400000, guid: 699ae5c682570bd47bf223e2ce0430b6, type: 2}
 --- !u!1 &4563194097839998568
 GameObject:
   m_ObjectHideFlags: 0

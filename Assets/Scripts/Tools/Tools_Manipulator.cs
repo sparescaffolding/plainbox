@@ -129,7 +129,7 @@ public class Tools_Manipulator : MonoBehaviour
             RaycastHit hit;
             bool _hit = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactor.distance);
 
-            if (Input.GetMouseButtonDown(0) && _hit)
+            if (Input.GetMouseButtonDown(0) && _hit && !UI_Manager.using_ui)
             {
                 GameObject clicked = hit.collider.gameObject;
 

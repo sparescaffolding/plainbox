@@ -8,11 +8,13 @@ public class Object_ToolPickup : MonoBehaviour
     //tool entry/data
     public Tools_Entry entry;
     private Tools_Manager tools_manager;
+    private UI_HotBarManager hotbar_manager;
 
     private void Start()
     {
         //initialize
         tools_manager = FindFirstObjectByType<Tools_Manager>();
+        hotbar_manager = FindFirstObjectByType<UI_HotBarManager>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -29,6 +31,8 @@ public class Object_ToolPickup : MonoBehaviour
                 Game_UndoSystem undo_system = FindAnyObjectByType<Game_UndoSystem>();
                 //remove me from undo system
                 undo_system.objects.Remove(gameObject);
+                //add to hotbar
+                hotbar_manager.AddTool(entry);
                 //destroy the pickup object
                 Destroy(gameObject);
             }

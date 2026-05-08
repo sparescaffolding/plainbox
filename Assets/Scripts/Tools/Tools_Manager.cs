@@ -19,6 +19,7 @@ public class Tools_Manager : MonoBehaviour
     [Space]
     public bool is_using = false;
     public GameObject tool_held;
+    public Tools_Entry tool_held_entry;
     public bool initialized_items = false;
     private int last_tool_id = -1;
     private Player_Interactor interactor;
@@ -88,6 +89,8 @@ public class Tools_Manager : MonoBehaviour
             //drop
             RemoveTool();
         }
+        
+        tool_held_entry = tool_held.GetComponent<Tools_Entry_Holder>().entry;
     }
     
     private void RefreshToolVisibility()

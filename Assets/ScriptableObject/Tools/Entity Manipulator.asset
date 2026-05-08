@@ -15,3 +15,4 @@ MonoBehaviour:
   name: Entity Manipulator
   prefab: {fileID: 4082636619600098476, guid: eaa576779c0088948b7dda2602cb870d, type: 3}
   prefab_drop: {fileID: 1117718346661703637, guid: f3d40f5225db9014999200852f6f0b6a, type: 3}
+  hotbar_icon: {fileID: 2800000, guid: 0fda33927315f72429142304c6615804, type: 3}

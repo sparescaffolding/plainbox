@@ -13,6 +13,8 @@ public class UI_Manager : MonoBehaviour
     public Player_Camera camera;
     public Player_3DPointer cursor;
     public Game_UndoSystem undosystem;
+    //static so its usable between all classes (global variable)
+    public static bool using_ui = false;
     [Space]
     public bool manipulating = false;
 
@@ -33,6 +35,7 @@ public class UI_Manager : MonoBehaviour
             ui_manipulatemenu.gameObject.SetActive(true);
             ui_manipulatemenu.Load();
             manipulating = true;
+            using_ui = true;
         }
     }
     
@@ -49,6 +52,7 @@ public class UI_Manager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+        using_ui = false;
     }
 
     public void SpawnMenuShow()
@@ -62,6 +66,7 @@ public class UI_Manager : MonoBehaviour
             Cursor.visible = true; //make mouse visible
             cursor.can_update = false; //disable 3d pointer
             Debug.Log(ui_spawnmenu.name + " shown");
+            using_ui = true;
         }
     }
 
@@ -79,6 +84,7 @@ public class UI_Manager : MonoBehaviour
             }
             cursor.can_update = true; //reenable 3d pointer
             Debug.Log(ui_spawnmenu.name + " hidden");
+            using_ui = false;
         }
     }
 
@@ -89,6 +95,7 @@ public class UI_Manager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None; //unlock mouse
         Cursor.visible = true; //make mouse visible
         cursor.can_update = false; //disable 3d pointer
+        using_ui = true;
     }
 
     public void ManipulateSettingsClose(bool cursor_lock)
@@ -101,6 +108,7 @@ public class UI_Manager : MonoBehaviour
             Cursor.visible = false; //make mouse invisible
         }
         cursor.can_update = true; //reenable 3d pointer
+        using_ui = false;
     }
 
     void Update()
