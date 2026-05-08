@@ -33,7 +33,7 @@ public class Player_Interactor : MonoBehaviour
         distance = d.value;
         //start the raycast from the cameras forward direction
         Physics.Raycast(transform.position, transform.forward, out hit, distance);
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !Game_Pause.is_paused)
         {
             //use Interact interface
             if (hit.transform.TryGetComponent(out IInteractable interactable))
@@ -52,7 +52,7 @@ public class Player_Interactor : MonoBehaviour
             }
         }
         //this is for picking up with the main tool (right click)
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !Game_Pause.is_paused)
         {
             //check if theres actually a transform
             if (hit.transform != null)

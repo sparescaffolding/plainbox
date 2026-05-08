@@ -43,13 +43,13 @@ public class Player_Pickup : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && holding && using_tool)
+        if (Input.GetKeyDown(KeyCode.F) && holding && using_tool && !Game_Pause.is_paused)
         {
             //freeze object on F key
             Freeze();
         }
         
-        if (Input.GetMouseButton(0) && holding && !interactor.tools_physhandler.is_being_used)
+        if (Input.GetMouseButton(0) && holding && !interactor.tools_physhandler.is_being_used && !Game_Pause.is_paused)
         {
             //throw the object thats being held
             current.Throw(controller, 400);
@@ -60,7 +60,7 @@ public class Player_Pickup : MonoBehaviour
             p.value = default_distance;
             holding = false;
         }
-        if (Input.GetMouseButton(0) && holding && interactor.tools_physhandler.is_being_used)
+        if (Input.GetMouseButton(0) && holding && interactor.tools_physhandler.is_being_used && !Game_Pause.is_paused)
         {
             //throw the object thats being held with extra force from physhandler
             current.Throw(controller, interactor.tools_physhandler.force);
