@@ -12,6 +12,6 @@ public class Player_ObjectSpawning : MonoBehaviour
         //instantiate object from entry at cursor position
         //apply offsetting
         Vector3 spawn_position = cursor.transform.position + Vector3.up * y_offset;
-        Instantiate(entry.prefab, spawn_position, Quaternion.identity);
+        Instantiate(entry.prefab, spawn_position, entry.prefab.transform.rotation);
     }
 }
