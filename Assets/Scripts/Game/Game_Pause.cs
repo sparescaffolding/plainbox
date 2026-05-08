@@ -73,6 +73,7 @@ public class Game_Pause : MonoBehaviour
     {
         //reload current scene
         //this is temporary, as restart logic would be improved on later
+        Resume();
         SceneManager.LoadScene(0);
     }
 }
