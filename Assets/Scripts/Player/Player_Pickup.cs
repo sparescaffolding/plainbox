@@ -17,8 +17,8 @@ public class Player_Pickup : MonoBehaviour
     public Tools_Manager tools_manager;
     [Range(1.5f, 4f)]
     public float default_distance = 2f;
-    public bool using_tool;
-    public bool holding = false;
+    public static bool using_tool;
+    public static bool holding = false;
     private void Start()
     {
         interactor = FindFirstObjectByType<Player_Interactor>();

@@ -42,7 +42,7 @@ public class Player_Interactor : MonoBehaviour
                 //pickup stuff
                 //
                 //start interacting
-                pickup.using_tool = false;
+                Player_Pickup.using_tool = false;
                 tools_manager.HideTools();
                 interactable.Interact(pickup);
             }
@@ -63,7 +63,7 @@ public class Player_Interactor : MonoBehaviour
                     if (tools_physhandler.selected)
                     {
                         //start interacting
-                        pickup.using_tool = true;
+                        Player_Pickup.using_tool = true;
                         pickup.AttemptPickup();
                         Debug.Log("attempted picking up " + hit.transform.name);
                         //mark it as being used

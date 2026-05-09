@@ -26,17 +26,17 @@ public class Tools_PhysicsHandler : MonoBehaviour
     private void Update()
     {
         //if holding via tool
-        if (player_interactor.pickup.holding && player_interactor.pickup.using_tool)
+        if (Player_Pickup.holding && Player_Pickup.using_tool)
         {
             //start moving claw things (start animation)
             animator.SetBool("holding", true);
-            player_interactor.pickup.using_tool = true;
+            Player_Pickup.using_tool = true;
         }
         else
         {
             //exit animation if not holding
             animator.SetBool("holding", false);
-            player_interactor.pickup.using_tool = true;
+            Player_Pickup.using_tool = true;
         }
     }
 

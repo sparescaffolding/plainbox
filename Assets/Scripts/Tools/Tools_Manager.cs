@@ -44,7 +44,7 @@ public class Tools_Manager : MonoBehaviour
         //apply cooldown
         if (Time.time - last_scroll_time > cooldown)
         {
-            if (!is_using && !interactor.pickup.holding)
+            if (!is_using && !Player_Pickup.holding)
             {
                 if (scroll > 0f)
                 {
@@ -93,89 +93,89 @@ public class Tools_Manager : MonoBehaviour
         tool_held_entry = tool_held.GetComponent<Tools_Entry_Holder>().entry;
         
         //if not using tool
-        if (!is_using)
+        if (!is_using || !Player_Pickup.holding || !Player_Pickup.using_tool)
         {
             //quick switch to tool key
-        if (Input.GetKeyDown("1"))
-        {
-            //check if tool exists
-            if (current_tool_count > 0)
+            if (Input.GetKeyDown("1"))
             {
-                current_tool_id = 0;
+                //check if tool exists
+                if (current_tool_count > 0)
+                {
+                    current_tool_id = 0;
+                }
             }
-        }
-        else if (Input.GetKeyDown("2"))
-        {
-            //check if tool exists
-            if (current_tool_count > 1)
+            else if (Input.GetKeyDown("2"))
             {
-                current_tool_id = 1;
+                //check if tool exists
+                if (current_tool_count > 1)
+                {
+                    current_tool_id = 1;
+                }
             }
-        }
-        else if (Input.GetKeyDown("3"))
-        {
-            //check if tool exists
-            if (current_tool_count > 2)
+            else if (Input.GetKeyDown("3"))
             {
-                current_tool_id = 2;
+                //check if tool exists
+                if (current_tool_count > 2)
+                {
+                    current_tool_id = 2;
+                }
             }
-        }
-        else if (Input.GetKeyDown("4"))
-        {
-            //check if tool exists
-            if (current_tool_count > 3)
+            else if (Input.GetKeyDown("4"))
             {
-                current_tool_id = 3;
+                //check if tool exists
+                if (current_tool_count > 3)
+                {
+                    current_tool_id = 3;
+                }
             }
-        }
-        else if (Input.GetKeyDown("5"))
-        {
-            //check if tool exists
-            if (current_tool_count > 4)
+            else if (Input.GetKeyDown("5"))
             {
-                current_tool_id = 4;
+                //check if tool exists
+                if (current_tool_count > 4)
+                {
+                    current_tool_id = 4;
+                }
             }
-        }
-        else if (Input.GetKeyDown("6"))
-        {
-            //check if tool exists
-            if (current_tool_count > 5)
+            else if (Input.GetKeyDown("6"))
             {
-                current_tool_id = 5;
+                //check if tool exists
+                if (current_tool_count > 5)
+                {
+                    current_tool_id = 5;
+                }
             }
-        }
-        else if (Input.GetKeyDown("7"))
-        {
-            //check if tool exists
-            if (current_tool_count > 6)
+            else if (Input.GetKeyDown("7"))
             {
-                current_tool_id = 6;
+                //check if tool exists
+                if (current_tool_count > 6)
+                {
+                    current_tool_id = 6;
+                }
             }
-        }
-        else if (Input.GetKeyDown("8"))
-        {
-            //check if tool exists
-            if (current_tool_count > 7)
+            else if (Input.GetKeyDown("8"))
             {
-                current_tool_id = 7;
+                //check if tool exists
+                if (current_tool_count > 7)
+                {
+                    current_tool_id = 7;
+                }
             }
-        }
-        else if (Input.GetKeyDown("9"))
-        {
-            //check if tool exists
-            if (current_tool_count > 8)
+            else if (Input.GetKeyDown("9"))
             {
-                current_tool_id = 8;
+                //check if tool exists
+                if (current_tool_count > 8)
+                {
+                    current_tool_id = 8;
+                }
             }
-        }
-        else if (Input.GetKeyDown("0"))
-        {
-            //check if tool exists
-            if (current_tool_count > 9)
+            else if (Input.GetKeyDown("0"))
             {
-                current_tool_id = 9;
+                //check if tool exists
+                if (current_tool_count > 9)
+                {
+                    current_tool_id = 9;
+                }
             }
-        }
         }
     }
     

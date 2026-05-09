@@ -76,7 +76,7 @@ public class Object_Pickupable : MonoBehaviour, IInteractable
     //if picked up with interactable key, disable freezing and rotation
     public void Interact(Player_Pickup player)
     {
-        player.using_tool = false;
+        Player_Pickup.using_tool = false;
         player.AttemptPickup();
         Debug.Log("picked up");
     }

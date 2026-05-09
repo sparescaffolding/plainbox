@@ -173,7 +173,7 @@ public class Player_Controller : MonoBehaviour
         }
         
         //jump functionality
-        if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying && (!grounded_prop || !pickup.holding))
+        if (Input.GetKey(KeyCode.Space) && canjump && grounded && !flying && (!grounded_prop || !Player_Pickup.holding))
         {
             //reset jump and start exiting slope
             canjump = false;
