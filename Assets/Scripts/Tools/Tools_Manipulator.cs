@@ -38,6 +38,8 @@ public class Tools_Manipulator : MonoBehaviour
     public GameObject rope_first_object;
     public GameObject rope_other_object;
     public GameObject rope_prefab;
+    private Vector3 rope_first_point;
+    private Vector3 rope_second_point;
 
     private void Start()
     {
@@ -194,31 +196,41 @@ public class Tools_Manipulator : MonoBehaviour
                 if (rope_first_object == null)
                 {
                     rope_first_object = clicked;
+                    rope_first_point = hit.point;
                     return;
                 }
                 //else if this is the second click, weld
                 else
                 {
                     rope_other_object = clicked;
-
+                    rope_second_point = hit.point;
+                    
                     //set rigidbodies
                     Rigidbody A = rope_first_object.GetComponent<Rigidbody>();
                     Rigidbody B = rope_other_object.GetComponent<Rigidbody>();
 
                     if (A != null && B != null)
                     {
+                        //initialize empty object
+                        GameObject f = new GameObject();
                         //add spring joint component and initialize rope prefab
                         SpringJoint joint = rope_first_object.AddComponent<SpringJoint>();
                         GameObject rope = Instantiate(rope_prefab);
                         Constraints_Rope rope_constraint = rope.GetComponent<Constraints_Rope>();
-                        //set objects
-                        rope_constraint.start_object = rope_first_object.gameObject.transform;
-                        rope_constraint.end_object = rope_other_object.gameObject.transform;
+                        //instantiate points and set position to hit
+                        GameObject child1 = Instantiate(f, rope_first_object.gameObject.transform);
+                        child1.transform.position = rope_first_point;
+                        GameObject child2 = Instantiate(f, rope_other_object.gameObject.transform);
+                        child2.transform.position = rope_second_point;
+
+                        rope_constraint.start_object = child1.gameObject.transform;
+                        rope_constraint.end_object = child2.gameObject.transform;
                         joint.connectedBody = B;
                         joint.spring = 10;
                         joint.damper = 2;
                         joint.minDistance = 0;
                         joint.maxDistance = 3;
+                        joint.enableCollision = true;       //fix collision
                         //finish by adding to undosystem
                         /*
                         ui_manager.undosystem.joints.Add(joint);    */
