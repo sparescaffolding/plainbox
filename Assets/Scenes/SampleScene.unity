@@ -5810,7 +5810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 468763333}
-  y_offset: 1
+  y_offset: 0.5
 --- !u!1 &746438532
 GameObject:
   m_ObjectHideFlags: 0
@@ -16897,7 +16897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765820e5c6f7c3046af3f72d46cb51af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tools_count: 5
+  tools_count: 9
   tools_manager: {fileID: 0}
   hotbar_entry: {fileID: 7027360977685427398, guid: f6e157e1c934e7e469393dac9bf636f8, type: 3}
   hotbar_list: []
