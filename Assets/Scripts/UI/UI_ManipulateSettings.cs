@@ -28,6 +28,10 @@ public class UI_ManipulateSettings : MonoBehaviour
         {
             desc.text = "To attach an object to another one:\n\n- First select the object you want to weld.\n- Then select the other object which you want to weld the first one to.";
         }
+        else if (manipulator.constraint_state == Constraint.Rope)
+        {
+            desc.text = "Rope";
+        }
     }
 
     public void ConstraintStateChanged(int state)

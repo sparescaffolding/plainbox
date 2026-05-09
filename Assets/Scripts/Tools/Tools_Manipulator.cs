@@ -8,7 +8,8 @@ using UnityEngine;
 public enum Constraint
 {
     None,
-    Weld
+    Weld,
+    Rope
 }
 
 public class Tools_Manipulator : MonoBehaviour
@@ -32,6 +33,11 @@ public class Tools_Manipulator : MonoBehaviour
     [Space] [Header("welding")]
     public GameObject w_first_object;
     public GameObject w_other_object;
+    
+    [Space] [Header("rope")]
+    public GameObject rope_first_object;
+    public GameObject rope_other_object;
+    public GameObject rope_prefab;
 
     private void Start()
     {
@@ -117,6 +123,7 @@ public class Tools_Manipulator : MonoBehaviour
         
         //constraint functions
         Weld();
+        Rope();
     }
 
     public void Weld()
@@ -164,6 +171,63 @@ public class Tools_Manipulator : MonoBehaviour
                     constraint_desc.text = "Select first object you want to weld.";
                     w_first_object = null;
                     w_other_object = null;
+                }
+            }
+        }
+    }
+    
+    public void Rope()
+    {
+        bool selected_first_obj = false;
+    
+        if (constraint_state == Constraint.Rope)
+        {
+            //shoot
+            RaycastHit hit;
+            bool _hit = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactor.distance);
+
+            if (Input.GetMouseButtonDown(0) && _hit && !UI_Manager.using_ui)
+            {
+                GameObject clicked = hit.collider.gameObject;
+
+                //if first click set first object
+                if (rope_first_object == null)
+                {
+                    rope_first_object = clicked;
+                    return;
+                }
+                //else if this is the second click, weld
+                else
+                {
+                    rope_other_object = clicked;
+
+                    //set rigidbodies
+                    Rigidbody A = rope_first_object.GetComponent<Rigidbody>();
+                    Rigidbody B = rope_other_object.GetComponent<Rigidbody>();
+
+                    if (A != null && B != null)
+                    {
+                        //add spring joint component and initialize rope prefab
+                        SpringJoint joint = rope_first_object.AddComponent<SpringJoint>();
+                        GameObject rope = Instantiate(rope_prefab);
+                        Constraints_Rope rope_constraint = rope.GetComponent<Constraints_Rope>();
+                        //set objects
+                        rope_constraint.start_object = rope_first_object.gameObject.transform;
+                        rope_constraint.end_object = rope_other_object.gameObject.transform;
+                        joint.connectedBody = B;
+                        joint.spring = 10;
+                        joint.damper = 2;
+                        joint.minDistance = 0;
+                        joint.maxDistance = 3;
+                        //finish by adding to undosystem
+                        /*
+                        ui_manager.undosystem.joints.Add(joint);    */
+                    }
+                
+                    //reset
+                    constraint_desc.text = "Select first object you want to weld.";
+                    rope_first_object = null;
+                    rope_other_object = null;
                 }
             }
         }

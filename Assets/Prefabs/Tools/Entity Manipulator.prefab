@@ -326,6 +326,9 @@ MonoBehaviour:
   constraint_state: 0
   w_first_object: {fileID: 0}
   w_other_object: {fileID: 0}
+  rope_first_object: {fileID: 0}
+  rope_other_object: {fileID: 0}
+  rope_prefab: {fileID: 6208740525627721358, guid: ca5f1d42216004c4988e34af896106ca, type: 3}
 --- !u!114 &5681953109497271803
 MonoBehaviour:
   m_ObjectHideFlags: 0
