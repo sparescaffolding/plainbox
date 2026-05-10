@@ -166,7 +166,9 @@ public class Tools_Manipulator : MonoBehaviour
                         joint.breakTorque = Mathf.Infinity;
                         joint.enableCollision = false;
                         //finish by adding to undosystem
-                        ui_manager.undosystem.joints.Add(joint);    
+                        ui_manager.undosystem.joints.Add(joint);
+                        //set last action
+                        ui_manager.undosystem.lastaction.Add("weld");
                     }
                 
                     //reset
@@ -232,8 +234,10 @@ public class Tools_Manipulator : MonoBehaviour
                         joint.maxDistance = 3;
                         joint.enableCollision = true;       //fix collision
                         //finish by adding to undosystem
-                        /*
-                        ui_manager.undosystem.joints.Add(joint);    */
+                        ui_manager.undosystem.springjoints.Add(joint);
+                        ui_manager.undosystem.rope_constraint.Add(rope_constraint);
+                        //set last action
+                        ui_manager.undosystem.lastaction.Add("rope");
                     }
                 
                     //reset
