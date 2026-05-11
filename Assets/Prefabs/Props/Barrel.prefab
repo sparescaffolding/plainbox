@@ -148,8 +148,8 @@ MonoBehaviour:
   scale: 1
   color: 1
   mass: 1
-  trigger: 0
-  damage: 0
-  health: 0
+  trigger: 1
+  damage: 1
+  health: 1
   damage_trigger: {fileID: 0}
   health_trigger: {fileID: 0}

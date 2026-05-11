@@ -17,6 +17,8 @@ public class UI_Color_PickerControl : MonoBehaviour
     public RawImage saturation_value;
 
     public Slider hue_slider;
+    public Slider smooth_slider;
+    public Slider metallic_slider;
 
     public TMP_InputField  hex_input;
     public TMP_InputField mat_id_input;
@@ -25,14 +27,15 @@ public class UI_Color_PickerControl : MonoBehaviour
     private Texture2D hue_texture;
     private Texture2D saturation_texture;
 
+    private UI_Color_SaturationControl pointer;
+
     public UI_Manager ui_manager;
 
     private void Start()
     {
         //initialize
         ui_manager = FindFirstObjectByType<UI_Manager>();
-        
-        
+        pointer = GetComponentInChildren<UI_Color_SaturationControl>();
         
         CreateHueImage();
         CreateSaturationImage();
@@ -51,6 +54,13 @@ public class UI_Color_PickerControl : MonoBehaviour
                 mat_id_input.text = "0";
             }
         }
+        mat_id_input.onEndEdit.AddListener(_ => Sync());
+    }
+
+    private void OnEnable()
+    {
+        //call sync when object selected
+        Sync();
     }
 
     private void CreateHueImage()
@@ -120,6 +130,22 @@ public class UI_Color_PickerControl : MonoBehaviour
         saturation_texture.Apply();
         UpdateColor();
     }
+
+    public void UpdateMetallic()
+    {
+        int id =  int.Parse(mat_id_input.text);
+        //get meshrenderer
+        Material[] mats = ui_manager.ui_manipulatemenu.manipulator.selected_object.GetComponent<MeshRenderer>().materials;
+        mats[id].SetFloat("_Metallic", metallic_slider.value);
+    }
+
+    public void UpdateSmoothness()
+    {
+        int id = int.Parse(mat_id_input.text);
+        //get meshrenderer
+        Material[] mats = ui_manager.ui_manipulatemenu.manipulator.selected_object.GetComponent<MeshRenderer>().materials;
+        mats[id].SetFloat("_Glossiness", smooth_slider.value);
+    }
     
     public void SetSaturation(float S, float V)
     {
@@ -127,6 +153,27 @@ public class UI_Color_PickerControl : MonoBehaviour
         current_value = V;      //value
         
         UpdateColor();
+    }
+
+    public void Sync()
+    {
+        //sync pointer and slider values to selected material color and property values
+        int id = int.Parse(mat_id_input.text);
+        //get meshrenderer
+        Material[] mats = ui_manager.ui_manipulatemenu.manipulator.selected_object.GetComponent<MeshRenderer>().materials;
+        
+        //sync color and saturation
+        Color col = mats[id].color;
+        Color.RGBToHSV(col, out current_hue, out current_saturation, out current_value);
+        hue_slider.value = current_hue;
+        hex_input.text = ColorUtility.ToHtmlStringRGB(col);
+        
+        //sync metallic and smoothness (_Glossiness)
+        metallic_slider.value = mats[id].GetFloat("_Metallic");
+        smooth_slider.value = mats[id].GetFloat("_Glossiness");
+        //redraw saturation and picker
+        UpdateSaturation();
+        pointer.Sync(current_saturation, current_value);
     }
 
     public void OnHexInput()

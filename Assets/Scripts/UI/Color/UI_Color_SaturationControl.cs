@@ -48,6 +48,20 @@ public class UI_Color_SaturationControl : MonoBehaviour, IDragHandler, IPointerC
 
         c.SetSaturation(xnorm, ynorm);
     }
+
+    public void Sync(float saturation, float value)
+    {
+        //get size
+        float width = rect_t.rect.width;
+        float height = rect_t.rect.height;
+        
+        //calculate position
+        float x = (saturation * width) - (width * 0.5f);
+        float y = (value * height) - (height * 0.5f);
+        
+        //set position
+        picker_t.localPosition = new Vector2(x, y);
+    }
     
     public void OnDrag(PointerEventData eventData) { UpdateColor(eventData); }
     public void OnPointerClick(PointerEventData eventData) { UpdateColor(eventData); }
