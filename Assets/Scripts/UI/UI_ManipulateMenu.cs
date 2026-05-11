@@ -52,18 +52,8 @@ public class UI_ManipulateMenu : MonoBehaviour
         object_trigger_gravity.onValueChanged.AddListener(ToggleTriggerGravity);
     }
 
-    public void Load()
+    public void LoadProperties()
     {
-        //disable all first
-        this.position.SetActive(false);
-        this.rotation.SetActive(false);
-        this.scale.SetActive(false);
-        color.SetActive(false);
-        mass.SetActive(false);
-        
-        rb = manipulator.selected_object.gameObject.GetComponent<Rigidbody>();
-        
-        
         //if position modification is allowed
         if (manipulator.object_properties.position)
         {
@@ -112,6 +102,21 @@ public class UI_ManipulateMenu : MonoBehaviour
             //enable field
             damage_property.SetActive(true);
         }
+    }
+    
+    public void Load()
+    {
+        //disable all first
+        this.position.SetActive(false);
+        this.rotation.SetActive(false);
+        this.scale.SetActive(false);
+        color.SetActive(false);
+        mass.SetActive(false);
+        
+        rb = manipulator.selected_object.gameObject.GetComponent<Rigidbody>();
+        
+        //load properties by calling function instead
+        LoadProperties();
         
         //pos rot and scale
         Vector3 position = manipulator.selected_object.gameObject.transform.position;
