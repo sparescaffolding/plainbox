@@ -30,7 +30,7 @@ public class UI_ManipulateSettings : MonoBehaviour
         }
         else if (manipulator.constraint_state == Constraint.Rope)
         {
-            desc.text = "Rope";
+            desc.text = "To create a simple rope constraint between two objects:\n\n- First select the object you want the rope to start from.\n- Then select the other object that you want the rope to end the connection at.";
         }
     }
 
