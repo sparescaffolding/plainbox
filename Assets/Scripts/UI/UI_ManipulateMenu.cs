@@ -60,11 +60,19 @@ public class UI_ManipulateMenu : MonoBehaviour
             //enable field
             this.position.SetActive(true);
         }
+        else
+        {
+            this.position.SetActive(false);
+        }
         //if rotation modification is allowed
         if (manipulator.object_properties.rotation)
         {
             //enable field
             this.rotation.SetActive(true);
+        }
+        else
+        {
+            this.rotation.SetActive(false);
         }
         //if scale modification is allowed
         if (manipulator.object_properties.scale)
@@ -72,11 +80,19 @@ public class UI_ManipulateMenu : MonoBehaviour
             //enable field
             this.scale.SetActive(true);
         }
+        else
+        {
+            this.scale.SetActive(false);
+        }
         //if color modification is allowed
         if (manipulator.object_properties.color)
         {
             //enable field
             color.SetActive(true);
+        }
+        else
+        {
+            this.color.SetActive(false);
         }
         //if mass modification is allowed
         if (manipulator.object_properties.mass)
@@ -84,11 +100,19 @@ public class UI_ManipulateMenu : MonoBehaviour
             //enable field
             mass.SetActive(true);
         }
+        else
+        {
+            this.mass.SetActive(false);
+        }
         //if trigger modification is allowed
         if (manipulator.object_properties.trigger)
         {
             //enable field
             toggle_trigger.SetActive(true);
+        }
+        else
+        {
+            this.toggle_trigger.SetActive(false);
         }
         //if health modification is allowed
         if (manipulator.object_properties.health)
@@ -96,11 +120,19 @@ public class UI_ManipulateMenu : MonoBehaviour
             //enable field
             health_property.SetActive(true);
         }
+        else
+        {
+            this.health_property.SetActive(false);
+        }
         //if damage modification is allowed
         if (manipulator.object_properties.damage)
         {
             //enable field
             damage_property.SetActive(true);
+        }
+        else
+        {
+            this.damage_property.SetActive(false);
         }
     }
     

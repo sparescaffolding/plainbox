@@ -76,10 +76,15 @@ public class Tools_Manipulator : MonoBehaviour
             constraint_name.text = "Constraint: " + "Weld";
             constraint_desc.text = "Select first object you want to weld, Then select another object which you want to weld the first one to.";
         }
+        else if (constraint_state == Constraint.Rope)
+        {
+            constraint_name.text = "Constraint: " + "Rope";
+            constraint_desc.text = "Select first object you want to start the rope from, Then select the other object which you want to rope to end the connection at.";
+        }
         
         //raycast
         bool _hit = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactor.distance);
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !Game_Pause.is_paused)
         {
             if (_hit)
             {
@@ -105,7 +110,10 @@ public class Tools_Manipulator : MonoBehaviour
                     cam.can_look = true;
                     interactor.tools_manager.is_using = false;
                     Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
+                    if (!Game_Pause.is_paused)
+                    {
+                        Cursor.visible = false;
+                    }
                     ui_manager.manipulating = false;
                     _hit = false;
                 }
@@ -118,7 +126,10 @@ public class Tools_Manipulator : MonoBehaviour
                 cam.can_look = true;
                 interactor.tools_manager.is_using = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                if (!Game_Pause.is_paused)
+                {
+                    Cursor.visible = false;
+                }
                 ui_manager.manipulating = false;
             }
         }
@@ -138,7 +149,7 @@ public class Tools_Manipulator : MonoBehaviour
             RaycastHit hit;
             bool _hit = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactor.distance);
 
-            if (Input.GetMouseButtonDown(0) && _hit && !UI_Manager.using_ui)
+            if (Input.GetMouseButtonDown(0) && _hit && !UI_Manager.using_ui && !Game_Pause.is_paused)
             {
                 GameObject clicked = hit.collider.gameObject;
 
@@ -190,7 +201,7 @@ public class Tools_Manipulator : MonoBehaviour
             RaycastHit hit;
             bool _hit = Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, interactor.distance);
 
-            if (Input.GetMouseButtonDown(0) && _hit && !UI_Manager.using_ui)
+            if (Input.GetMouseButtonDown(0) && _hit && !UI_Manager.using_ui && !Game_Pause.is_paused)
             {
                 GameObject clicked = hit.collider.gameObject;
 

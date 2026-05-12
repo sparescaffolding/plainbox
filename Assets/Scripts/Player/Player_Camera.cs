@@ -20,7 +20,10 @@ public class Player_Camera : MonoBehaviour
     {
         //lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (!Game_Pause.is_paused)
+        {
+            Cursor.visible = false;
+        }
     }
 
     private void Update()

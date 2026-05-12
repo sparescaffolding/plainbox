@@ -18,8 +18,25 @@ public class Object_Manipulatable : MonoBehaviour
 
     private void Start()
     {
-        //init
-        damage_trigger =  gameObject.AddComponent<Object_DamageTrigger>();
-        health_trigger =  gameObject.AddComponent<Object_HealthTrigger>();
+        //only add component if true
+        if (damage)
+        {
+            damage_trigger = gameObject.AddComponent<Object_DamageTrigger>();
+        }
+        if (health)
+        {
+            health_trigger =  gameObject.AddComponent<Object_HealthTrigger>();
+        }
+    }
+
+    private void Update()
+    {
+        //add back when true
+        if(damage) { if(!damage_trigger) { damage_trigger = gameObject.AddComponent<Object_DamageTrigger>(); } else { return; } }
+        if(health) { if(!health_trigger) { health_trigger = gameObject.AddComponent<Object_HealthTrigger>(); } else { return; } }
+        
+        //remove when false
+        if(!damage) { if(damage_trigger) { Destroy(damage_trigger); } else { return; } }
+        if(!health) { if(health_trigger) { Destroy(health_trigger); } else { return; } }
     }
 }

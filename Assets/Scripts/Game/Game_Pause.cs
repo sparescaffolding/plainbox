@@ -46,7 +46,10 @@ public class Game_Pause : MonoBehaviour
             if (!ui_manager.manipulating)
             {
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                if (!Game_Pause.is_paused)
+                {
+                    Cursor.visible = false;
+                }
                 camera.can_look = true;
             }
 
