@@ -47,7 +47,7 @@ public class UI_Manager : MonoBehaviour
         camera.can_look = true;
         //disable is_using if exit button used
         ui_manipulatemenu.manipulator.interactor.tools_manager.is_using = false;
-        if (cursor_lock)
+        if (cursor_lock && !Game_Pause.is_paused)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
