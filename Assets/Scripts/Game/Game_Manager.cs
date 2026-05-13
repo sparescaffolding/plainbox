@@ -12,15 +12,32 @@ public class Game_Manager : MonoBehaviour
     public GameObject hud;
     public GameObject tools_parent;
     public Transform spawn_position;
-
+    public Game_UndoSystem undo;
+    [Space]
+    public int max_constraint = 100;
+    public int current = 0;
+    
     private void Start()
     {
         controller = FindFirstObjectByType<Player_Controller>();
         camera = FindFirstObjectByType<Player_Camera>();
+        undo = GetComponent<Game_UndoSystem>();
     }
 
     private void Update()
     {
+        if ((undo.joints.Count + undo.rope_constraint.Count) >= max_constraint)
+        {
+            undo.max_hit = true;
+        }
+        else
+        {
+            undo.max_hit = false;
+        }
+        
+        //calculate total
+        current = undo.joints.Count + undo.rope_constraint.Count;
+        
         if (Input.GetKeyDown(KeyCode.F3))
         {
             Respawn();

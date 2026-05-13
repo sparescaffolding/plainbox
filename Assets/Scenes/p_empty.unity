@@ -19724,6 +19724,8 @@ MonoBehaviour:
   hud: {fileID: 1918464266}
   tools_parent: {fileID: 1627831710}
   spawn_position: {fileID: 503359871}
+  undo: {fileID: 0}
+  max_constraint: 1
 --- !u!1 &1901428308
 GameObject:
   m_ObjectHideFlags: 0

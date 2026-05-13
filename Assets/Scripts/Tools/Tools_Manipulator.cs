@@ -41,6 +41,8 @@ public class Tools_Manipulator : MonoBehaviour
     private Vector3 rope_first_point;
     private Vector3 rope_second_point;
 
+    private Game_Manager manager;
+
     private void Start()
     {
         //initialize
@@ -48,6 +50,7 @@ public class Tools_Manipulator : MonoBehaviour
         interactor = FindFirstObjectByType<Player_Interactor>();
         ui_manager = FindFirstObjectByType<UI_Manager>();
         cam =  FindFirstObjectByType<Player_Camera>();
+        manager = FindFirstObjectByType<Game_Manager>();
         constraint_state = Constraint.None;
     }
     
@@ -195,7 +198,7 @@ public class Tools_Manipulator : MonoBehaviour
     {
         bool selected_first_obj = false;
     
-        if (constraint_state == Constraint.Rope)
+        if (constraint_state == Constraint.Rope && (manager.undo.joints.Count + manager.undo.rope_constraint.Count) < manager.max_constraint)
         {
             //shoot
             RaycastHit hit;
@@ -253,10 +256,16 @@ public class Tools_Manipulator : MonoBehaviour
                 
                     //reset
                     constraint_desc.text = "Select first object you want to weld.";
+                    //reset check
                     rope_first_object = null;
                     rope_other_object = null;
                 }
             }
+        }
+        if ((manager.undo.joints.Count + manager.undo.rope_constraint.Count) >= manager.max_constraint && !manager.undo.max_hit)
+        {
+            manager.undo.MaxConstraintReached();
+            manager.undo.max_hit = true;
         }
     }
 

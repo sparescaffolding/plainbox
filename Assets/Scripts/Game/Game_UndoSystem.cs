@@ -13,9 +13,16 @@ public class Game_UndoSystem : MonoBehaviour
     public GameObject action_entry;
     //list of actions
     public List<string> lastaction = new List<string>();
-    
+    public bool max_hit = false;
+
+    private void Start()
+    {
+        max_hit = false;
+    }
+
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Z))
         {
             string last = lastaction[^1];
@@ -87,5 +94,15 @@ public class Game_UndoSystem : MonoBehaviour
 
             last = "";
         }
+    }
+
+    public void MaxConstraintReached()
+    {
+        //initiate action entry
+        GameObject w_entry = Instantiate(action_entry, action_list_content.transform);
+        UI_ActionEntry w_ui_action_entry = w_entry.GetComponent<UI_ActionEntry>();
+        //set action entry text
+        w_ui_action_entry.text.text = "Max Constraints!";
+        max_hit = true;
     }
 }
