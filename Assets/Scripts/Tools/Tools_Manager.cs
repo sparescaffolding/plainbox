@@ -23,10 +23,12 @@ public class Tools_Manager : MonoBehaviour
     public bool initialized_items = false;
     private int last_tool_id = -1;
     private Player_Interactor interactor;
+    private UI_Manager ui_manager;
     
     void Start()
     {
         interactor =  FindFirstObjectByType<Player_Interactor>();
+        ui_manager = FindFirstObjectByType<UI_Manager>();
         //instantiate each entry from tools list as child
         foreach (Tools_Entry g in tools_list)
         {
@@ -93,7 +95,7 @@ public class Tools_Manager : MonoBehaviour
         tool_held_entry = tool_held.GetComponent<Tools_Entry_Holder>().entry;
         
         //if not using tool
-        if (!is_using || !Player_Pickup.holding || !Player_Pickup.using_tool)
+        if (!is_using && !Player_Pickup.holding || !Player_Pickup.using_tool && !ui_manager.manipulating)
         {
             //quick switch to tool key
             if (Input.GetKeyDown("1"))
