@@ -1,7 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
+public enum UI_Theme
+{
+    Light,
+    Dark
+}
 
 public class UI_Manager : MonoBehaviour
 {
@@ -15,8 +23,13 @@ public class UI_Manager : MonoBehaviour
     public Game_UndoSystem undosystem;
     //static so its usable between all classes (global variable)
     public static bool using_ui = false;
+    //theme stuff
+    public UI_Theme theme;
+    public List<Color> theme_img_colors = new List<Color>();
+    public List<Color> theme_txt_colors = new List<Color>();
     [Space]
     public bool manipulating = false;
+    public List<GameObject> ui_opened;
 
     private void Start()
     {
@@ -28,6 +41,67 @@ public class UI_Manager : MonoBehaviour
         ui_hud.SetActive(true);
     }
 
+    public void RefreshUITheme()
+    {
+        //if theme is light
+        if (theme == UI_Theme.Light)
+        {
+            //create img and txt list
+            List<Image> img = new List<Image>();
+            List<TextMeshProUGUI> txt = new List<TextMeshProUGUI>();
+            //add all objects from ui thats opened into the img list
+            foreach (GameObject o in ui_opened)
+            {
+                //get img and txt
+                Image[] imgs = o.GetComponentsInChildren<Image>();
+                TextMeshProUGUI[] txts = o.GetComponentsInChildren<TextMeshProUGUI>();
+                //add
+                img.AddRange(imgs);
+                txt.AddRange(txts);
+            }
+            //apply theme to images
+            foreach (Image i in img)
+            {
+                //set image (ui elements) color to the theme color
+                i.color = new Color(theme_img_colors[0].r, theme_img_colors[0].g, theme_img_colors[0].b, i.color.a);
+            }
+            //apply new color to text
+            foreach (TextMeshProUGUI t in txt)
+            {
+                //make text black
+                t.color = theme_txt_colors[0];
+            }
+        }
+        else if (theme == UI_Theme.Dark)
+        {
+            //create img and txt list
+            List<Image> img = new List<Image>();
+            List<TextMeshProUGUI> txt = new List<TextMeshProUGUI>();
+            //add all objects from ui thats opened into the img list
+            foreach (GameObject o in ui_opened)
+            {
+                //get img and txt
+                Image[] imgs = o.GetComponentsInChildren<Image>();
+                TextMeshProUGUI[] txts = o.GetComponentsInChildren<TextMeshProUGUI>();
+                //add
+                img.AddRange(imgs);
+                txt.AddRange(txts);
+            }
+            //apply theme to images
+            foreach (Image i in img)
+            {
+                //set image (ui elements) color to the theme color
+                i.color = new Color(theme_img_colors[1].r, theme_img_colors[1].g, theme_img_colors[1].b, i.color.a);
+            }
+            //apply new color to text
+            foreach (TextMeshProUGUI t in txt)
+            {
+                //make text black
+                t.color = theme_txt_colors[1];
+            }
+        }
+    }
+
     public void ManipulateMenuShow()
     {
         if (!player_controller.dead)
@@ -36,6 +110,8 @@ public class UI_Manager : MonoBehaviour
             ui_manipulatemenu.Load();
             manipulating = true;
             using_ui = true;
+            ui_opened.Add(ui_manipulatemenu.gameObject);
+            RefreshUITheme();
         }
     }
     
@@ -53,6 +129,7 @@ public class UI_Manager : MonoBehaviour
             Cursor.visible = false;
         }
         using_ui = false;
+        ui_opened.Remove(ui_manipulatemenu.gameObject);
     }
 
     public void SpawnMenuShow()
@@ -67,6 +144,8 @@ public class UI_Manager : MonoBehaviour
             cursor.can_update = false; //disable 3d pointer
             Debug.Log(ui_spawnmenu.name + " shown");
             using_ui = true;
+            ui_opened.Add(ui_spawnmenu.gameObject);
+            RefreshUITheme();
         }
     }
 
@@ -85,6 +164,7 @@ public class UI_Manager : MonoBehaviour
             cursor.can_update = true; //reenable 3d pointer
             Debug.Log(ui_spawnmenu.name + " hidden");
             using_ui = false;
+            ui_opened.Remove(ui_spawnmenu.gameObject);
         }
     }
 
@@ -96,6 +176,8 @@ public class UI_Manager : MonoBehaviour
         Cursor.visible = true; //make mouse visible
         cursor.can_update = false; //disable 3d pointer
         using_ui = true;
+        ui_opened.Add(ui_manipulatesettings.gameObject);
+        RefreshUITheme();
     }
 
     public void ManipulateSettingsClose(bool cursor_lock)
@@ -109,6 +191,7 @@ public class UI_Manager : MonoBehaviour
         }
         cursor.can_update = true; //reenable 3d pointer
         using_ui = false;
+        ui_opened.Remove(ui_manipulatesettings.gameObject);
     }
 
     void Update()

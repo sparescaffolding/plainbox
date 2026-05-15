@@ -8,7 +8,7 @@ using TMPro;
 
 public class UI_Color_SaturationControl : MonoBehaviour, IDragHandler, IPointerClickHandler
 {
-    public Image picker;
+    public RawImage picker;
     public RawImage saturation_image;
     public UI_Color_PickerControl c;
     private RectTransform rect_t, picker_t;
