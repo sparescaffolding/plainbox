@@ -21,9 +21,11 @@ public class UI_Manager : MonoBehaviour
     public Player_Camera camera;
     public Player_3DPointer cursor;
     public Game_UndoSystem undosystem;
+    [Space]
     //static so its usable between all classes (global variable)
     public static bool using_ui = false;
     //theme stuff
+    public TMP_Dropdown theme_dropdown;
     public UI_Theme theme;
     public List<Color> theme_img_colors = new List<Color>();
     public List<Color> theme_txt_colors = new List<Color>();
@@ -39,6 +41,17 @@ public class UI_Manager : MonoBehaviour
         undosystem = FindFirstObjectByType<Game_UndoSystem>();//find undo system
         //enable hud
         ui_hud.SetActive(true);
+        
+        //initialize theme dropdown
+        theme_dropdown.ClearOptions();
+        string[] options = Enum.GetNames(typeof(UI_Theme));
+        theme_dropdown.AddOptions(new List<string>(options));
+        theme_dropdown.onValueChanged.AddListener(OnThemeChanged);
+    }
+
+    void OnThemeChanged(int index)
+    {
+        theme = (UI_Theme)index;
     }
 
     public void RefreshUITheme()
@@ -106,6 +119,7 @@ public class UI_Manager : MonoBehaviour
     {
         if (!player_controller.dead)
         {
+            RefreshUITheme();
             ui_manipulatemenu.gameObject.SetActive(true);
             ui_manipulatemenu.Load();
             manipulating = true;
@@ -137,6 +151,7 @@ public class UI_Manager : MonoBehaviour
         //make sure this menu cant be opened when dead, paused or manipulating
         if (!player_controller.dead && !Game_Pause.is_paused && !manipulating)
         {
+            RefreshUITheme();
             ui_spawnmenu.SetActive(true); //enable spawn menu
             camera.can_look = false; //disable looking
             Cursor.lockState = CursorLockMode.None; //unlock mouse
@@ -170,6 +185,7 @@ public class UI_Manager : MonoBehaviour
 
     public void ManipulateSettingsShow()
     {
+        RefreshUITheme();
         ui_manipulatesettings.SetActive(true);
         camera.can_look = false; //disable looking
         Cursor.lockState = CursorLockMode.None; //unlock mouse
